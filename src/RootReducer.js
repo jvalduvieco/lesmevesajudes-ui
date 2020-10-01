@@ -10,6 +10,7 @@ import ReportBugReducer from "./reportBug/ReportBugReducer";
 import ResidenceReducer from './residence/ResidenceReducer';
 import ResultsReducer from './results/ResultsReducer';
 import AdminReducer from './admin/AdminReducer';
+import DashboardReducer from './dashboard/DashboardReducer';
 
 const rootReducer = combineReducers({
   family: FamilyReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   step: StepReducer,
   reportBug: ReportBugReducer,
   admin: AdminReducer,
+  dashboard: DashboardReducer,
 });
 
 export default rootReducer;

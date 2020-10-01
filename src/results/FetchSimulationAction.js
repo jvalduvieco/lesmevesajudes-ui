@@ -5,6 +5,7 @@ import type {PersonsState} from '../persons/PersonTypes';
 import type {ResidenceData} from '../residence/ResidenceTypes';
 import OpenFiscaAPIClient from '../shared/OpenFiscaAPIClient/OpenFiscaAPIClient';
 import SimulationStoreClient from '../shared/SimulationStoreAPIClient';
+import {SHOW_ALL_SIMULATIONS} from '../dashboard/DashboardReducer';
 
 export const START_FETCH_SIMULATION = 'START_FETCH_SIMULATION';
 export const FETCH_SIMULATION = 'FETCH_SIMULATION';
@@ -78,7 +79,7 @@ export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => 
 		if (result.status === 210) {
 			return dispatch({
 				type: RETRIEVE_SIMULATION_ERROR,
-	      		payload: TIMED_OUT_SIMULATION,			
+	      		payload: TIMED_OUT_SIMULATION,
 			});
 		}
 		const simulationData = JSON.parse(result.data.simulation);
@@ -97,4 +98,26 @@ export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => 
       payload: RETRIEVE_SIMULATION_ERROR,
     });
   });
+}
+
+  export const retrieveAllSimulations = () =>  (dispatch: any) => {
+  	return simulationStore.getAllSimulations().then(result => {
+  		if (result.status === 210) {
+  			return dispatch({
+  				type: RETRIEVE_SIMULATION_ERROR,
+  	      payload: TIMED_OUT_SIMULATION,
+  			});
+  		}
+  		const simulations = result.data;
+  		return dispatch ({
+        type: SHOW_ALL_SIMULATIONS,
+        simulations: simulations,
+  		});
+  	}).catch(error => {
+      console.log(JSON.stringify(error, null, 2));
+      //dispatch({
+      //  type: RETRIEVE_SIMULATION_ERROR,
+      //  payload: RETRIEVE_SIMULATION_ERROR,
+      //});
+    });
 }

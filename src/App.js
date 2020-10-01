@@ -8,6 +8,7 @@ import ScrollToTop from './components/Common/ScrollToTop';
 import {intents} from './components/Intents';
 import {API_URL, ENVIRONMENT, REPORT_BUG_URL} from "./config";
 import WizardPage from './pages/Wizard';
+import DashboardPage from './dashboard/DashboardComponent';
 import ReportBugPage from './reportBug/ReportBugPage';
 import {getCodeVersion, getReleaseDate} from "./shared/getCodeVersion";
 import isDevelopment from './shared/isDevelopment';
@@ -39,6 +40,7 @@ class App extends Component {
                   <Switch>
                     <Route exact={true} path='/' component={WizardPage}/>
                     <Route path='/admin' component={WizardPage}/>
+                    <Route path='/dashboard' component={DashboardPage}/>
                     {isDevelopment &&
                     <Fragment>
                       <Route path='/reportBug' component={ReportBugPage}/>
