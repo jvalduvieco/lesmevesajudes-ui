@@ -24,6 +24,10 @@ class SimulationStoreaAPIClient {
   getAllSimulations() {
 	  return axios.get(this.url, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}});
   }
+
+  getAllResults() {
+	  return axios.get(this.url + "/results", {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}});
+  }
 }
 
 export default SimulationStoreaAPIClient;

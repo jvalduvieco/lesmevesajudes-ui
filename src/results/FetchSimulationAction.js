@@ -100,8 +100,8 @@ export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => 
   });
 }
 
-  export const retrieveAllSimulations = () =>  (dispatch: any) => {
-  	return simulationStore.getAllSimulations().then(result => {
+  export const retrieveAllResults = () =>  (dispatch: any) => {
+  	return simulationStore.getAllResults().then(result => {
   		if (result.status === 210) {
   			return dispatch({
   				type: RETRIEVE_SIMULATION_ERROR,
