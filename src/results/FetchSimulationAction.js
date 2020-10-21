@@ -5,7 +5,6 @@ import type {PersonsState} from '../persons/PersonTypes';
 import type {ResidenceData} from '../residence/ResidenceTypes';
 import OpenFiscaAPIClient from '../shared/OpenFiscaAPIClient/OpenFiscaAPIClient';
 import SimulationStoreClient from '../shared/SimulationStoreAPIClient';
-import {SHOW_ALL_SIMULATIONS} from '../dashboard/DashboardReducer';
 
 export const START_FETCH_SIMULATION = 'START_FETCH_SIMULATION';
 export const FETCH_SIMULATION = 'FETCH_SIMULATION';
@@ -75,16 +74,15 @@ export const saveSimulation = (id: string, simulationData: SimulationData, resul
 
 export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => {
 	return simulationStore.getSimulation(simulationId).then(result => {
-//		console.log(result.data);
 		if (result.status === 210) {
 			return dispatch({
 				type: RETRIEVE_SIMULATION_ERROR,
 	      		payload: TIMED_OUT_SIMULATION,
 			});
 		}
-		const simulationData = JSON.parse(result.data.simulation);
-		const simulationResult = JSON.parse(result.data.result);
-		const initialSimulationId = result.data.id_parent !== 'null' ? result.data.id_parent : result.data.id;
+		const simulationData = result.data.simulation;
+		const simulationResult = result.data.result;
+		const initialSimulationId = result.data.id_parent? result.data.id_parent : result.data.id;
 		return dispatch({
 			type: SHOW_SIMULATION,
 			simulation: simulationData,
@@ -100,19 +98,25 @@ export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => 
   });
 }
 
-  export const retrieveAllResults = () =>  (dispatch: any) => {
-  	return simulationStore.getAllResults().then(result => {
-  		if (result.status === 210) {
+// pageable results
+/*export const retrieveAllResults = (page = 1, limit = 12000, results = []) => async dispatch =>   {
+    	simulationStore.getAllResults(page, limit).then(response => {
+  		if (response.status === 210) {
   			return dispatch({
   				type: RETRIEVE_SIMULATION_ERROR,
   	      payload: TIMED_OUT_SIMULATION,
   			});
   		}
-  		const simulations = result.data;
+  		results = [...results, ...response.data.results];
+      const page = response.data.page;
+      if(response.data.results[0]) {
+        dispatch(retrieveAllResults(page + 1, limit, results))
+      }
   		return dispatch ({
         type: SHOW_ALL_SIMULATIONS,
-        simulations: simulations,
+        results: results,
   		});
+
   	}).catch(error => {
       console.log(JSON.stringify(error, null, 2));
       //dispatch({
@@ -120,4 +124,4 @@ export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => 
       //  payload: RETRIEVE_SIMULATION_ERROR,
       //});
     });
-}
+}*/
