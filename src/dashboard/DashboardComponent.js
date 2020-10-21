@@ -4,10 +4,8 @@ import {Grid,Typography} from '@material-ui/core';
 import {retrieveDashboard} from './DashboardAction';
 import {isEmpty,
         compose,
-        keys,
         last,
         map,
-        omit,
         prop,
         reverse,
         sortBy,
@@ -30,14 +28,17 @@ type Props = {
   schoolData: YesNoType,
   violenceData: YesNoType,
   disabledData: YesNoType,
+  laboralData: Object,
+  ageData: Object,
+  housingData: Object,
   dispatch: Function,
   retrieveDashboard: any
 };
 
 var helpData = {};
 var sexData= {"homes":0,"dones":0};
-var ageData={"menors":20,"adults":50,"jubilats":30};
-const laboralData={"Treball per compte propi":10,
+var ageData= {"menors":0,"adults":0,"jubilats":0};
+/*const laboralData={"Treball per compte propi":10,
                   "Treballa per compte propi":10,
                   "Treball per compte d'altri jornada complerta":10,
                   "Treball per compte d'altri jornada parcial":15,
@@ -45,14 +46,12 @@ const laboralData={"Treball per compte propi":10,
                   "Tasques de la llar":20,
                   "Estudiant o pràctiques sense remunerar":10,
                   "Jubilat/ada o prejubilat/ada":10,
-                  "Altres situacions":10}
+                  "Altres situacions":10}*/
+var laboralData={};
 var schoolData={"yes":0,"no":0};
 var disabledData={"yes":0,"no":0};
 var violenceData={"yes":0,"no":0};
-const housingData = {"Visc en un habitatge de propietat sense hipoteca":40,
-                    "Visc en un habitatge  de propietat amb hipoteca":25,
-                    "No tinc un habitatge fix":30,
-                    "Visc en un habitatge en cessió d'ús":5} // simulation - residence - relacio_habitatge
+var housingData = {} // simulation - residence - relacio_habitatge
 
 // return format: [["GG_270_mensual",3],["GE_051_03_mensual",2],...]
 const sortHelps = (helps) => compose(
@@ -75,6 +74,9 @@ export const DashboardPage = (props :Props) => {
     violenceData = props.violenceData;
     disabledData = props.disabledData;
     helpData = props.helpData;
+    laboralData = props.laboralData;
+    ageData = props.ageData;
+    housingData = props.housingData;
   }
 
   const sortedHelp = sortHelps(helpData)
@@ -142,6 +144,9 @@ function mapStateToProps(state) {
     violenceData: state.dashboard.violenceData,
     disabledData: state.dashboard.disabledData,
     helpData: state.dashboard.helpData,
+    laboralData: state.dashboard.laboralData,
+    ageData: state.dashboard.ageData,
+    housingData: state.dashboard.housingData,
   };
   return props;
 }

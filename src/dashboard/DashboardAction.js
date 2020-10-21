@@ -9,6 +9,7 @@ import {
     filter,
     flatten,
     forEach,
+    has,
     map,
     pluck,
     prop,
@@ -18,6 +19,17 @@ export const RETRIEVE_DASHBOARD_ERROR = 'RETRIEVE_DASHBOARD_ERROR';
 export const TIMED_OUT_DASHBOARD = 'TIMED_OUT_DASHBOARD';
 
 const esMenor = persona => prop('edat')(persona) < 18; //TODO is this the condition for an adult person?
+const noEsMenor = persona => prop('edat')(persona) > 18;
+
+const compareAge = age => {
+  if (age < 18) {
+    return 'menors'
+  } else if (age > 65) {
+    return 'jubilats'
+  } else {
+    return 'adults'
+  }
+}
 
 const collectHelpData = (results: List, filter: FilterType) => {
   return compose(
@@ -53,6 +65,27 @@ const collectSchoolData = (results: List, resultFilter: FilterType) => compose(
 const collectViolenceData = (results: List, resultFilter: FilterType) => yesNoCount('violencia',results)
 const collectDisabledData = (results: List, resultFilter: FilterType) => yesNoCount('discapacitat',results)
 
+// TODO sort laboral data?
+const collectLaboralData = (results: List, resultFilter: FilterType) => compose(
+                                                                            countBy(forEach(v => v)),
+                                                                            pluck('situacio_laboral'),
+                                                                            filter(has('situacio_laboral')),
+                                                                            filter(noEsMenor),
+                                                                            flatten,
+                                                                            map(r => values(r.persones)))(results)
+const collectAgeData = (results: List, resultFilter: FilterType) => compose(
+                                                                        countBy(compareAge),
+                                                                        pluck('edat'),
+                                                                        flatten,
+                                                                        map(r => values(r.persones)))(results)
+
+const collectHousingData = (results: List, resultFilter: FilterType) => compose(
+                                                                            countBy(forEach(v => v)),
+                                                                            map(prop('relacio_habitatge')),
+                                                                            filter(has('relacio_habitatge')),
+                                                                            map(prop('habitatge')),
+                                                                            filter(has('habitatge')))(results)
+
 export const retrieveDashboard = () => async dispatch =>   {
   axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
   		if (response.status === 210) {
@@ -69,7 +102,10 @@ export const retrieveDashboard = () => async dispatch =>   {
         schoolData: collectSchoolData(response.data.dashboards),
         violenceData: collectViolenceData(response.data.dashboards),
         disabledData: collectDisabledData(response.data.dashboards),
-        helpData: collectHelpData(response.data.dashboards)
+        helpData: collectHelpData(response.data.dashboards),
+        laboralData: collectLaboralData(response.data.dashboards),
+        ageData: collectAgeData(response.data.dashboards),
+        housingData: collectHousingData(response.data.dashboards)
   		});
 
   	}).catch(error => {
