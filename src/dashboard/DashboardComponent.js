@@ -4,6 +4,7 @@ import {Grid,Typography} from '@material-ui/core';
 import {retrieveDashboard} from './DashboardAction';
 import {isEmpty,
         compose,
+        keys,
         last,
         map,
         prop,
@@ -23,6 +24,7 @@ import {SexType, YesNoType} from './DashboardTypes';
 
 type Props = {
   allResults: any,
+  positiveNegativeData: Object,
   helpData: Object,
   sexData: SexType,
   schoolData: YesNoType,
@@ -36,6 +38,7 @@ type Props = {
 };
 
 var helpData = {};
+var positiveNegativeData = {};
 var sexData= {"homes":0,"dones":0};
 var ageData= {"menors":0,"adults":0,"jubilats":0};
 /*const laboralData={"Treball per compte propi":10,
@@ -64,8 +67,6 @@ const getHelpValues = (sortedHelpsArray) => map(v => prop(1,values(v)))(sortedHe
 
 export const DashboardPage = (props :Props) => {
 
-  var positiveNegativeCounter = [0,0,0]
-
   if (isEmpty(props.allResults)) {
     props.retrieveDashboard();
   } else {
@@ -77,6 +78,7 @@ export const DashboardPage = (props :Props) => {
     laboralData = props.laboralData;
     ageData = props.ageData;
     housingData = props.housingData;
+    positiveNegativeData = props.positiveNegativeData;
   }
 
   const sortedHelp = sortHelps(helpData)
@@ -97,9 +99,9 @@ export const DashboardPage = (props :Props) => {
   };
 
   const data2 = {
-  	labels: ['Positives','Negatives','Error'],
+  	labels: keys(positiveNegativeData),
   	datasets: [{
-  		data: positiveNegativeCounter,
+  		data: values(positiveNegativeData),
   		backgroundColor: ['#bdcebe','#eca1a6','#d6cbd3']
   	}]
   };
@@ -147,6 +149,7 @@ function mapStateToProps(state) {
     laboralData: state.dashboard.laboralData,
     ageData: state.dashboard.ageData,
     housingData: state.dashboard.housingData,
+    positiveNegativeData: state.dashboard.positiveNegativeData,
   };
   return props;
 }

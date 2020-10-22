@@ -11,6 +11,7 @@ export default function(
           laboralData: Object,
           ageData: Object,
           housingData: Object,
+          positiveNegativeData: Object,
         },
   action
 ) {
@@ -27,6 +28,7 @@ export default function(
       laboralData: action.laboralData,
       ageData: action.ageData,
       housingData: action.housingData,
+      positiveNegativeData: action.positiveNegativeData,
 
     }
   default:

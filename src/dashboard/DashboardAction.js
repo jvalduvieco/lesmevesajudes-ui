@@ -85,6 +85,7 @@ const collectHousingData = (results: List, resultFilter: FilterType) => compose(
                                                                             filter(has('relacio_habitatge')),
                                                                             map(prop('habitatge')),
                                                                             filter(has('habitatge')))(results)
+const collectPositiveNegativeData = (results: List, resultFilter: FilterType) => countBy(prop('estatus'))(results)
 
 export const retrieveDashboard = () => async dispatch =>   {
   axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
@@ -105,7 +106,8 @@ export const retrieveDashboard = () => async dispatch =>   {
         helpData: collectHelpData(response.data.dashboards),
         laboralData: collectLaboralData(response.data.dashboards),
         ageData: collectAgeData(response.data.dashboards),
-        housingData: collectHousingData(response.data.dashboards)
+        housingData: collectHousingData(response.data.dashboards),
+        positiveNegativeData: collectPositiveNegativeData(response.data.dashboards)
   		});
 
   	}).catch(error => {
