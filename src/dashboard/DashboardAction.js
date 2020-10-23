@@ -11,6 +11,8 @@ import {
     forEach,
     has,
     map,
+    merge,
+    path,
     pluck,
     prop,
     values } from 'ramda';
@@ -31,13 +33,20 @@ const compareAge = age => {
   }
 }
 
-const collectHelpData = (results: List, filter: FilterType) => {
-  return compose(
-          countBy(forEach(v => v)),
-          flatten,
-          map(prop('ajudes')),
-          flatten,
-          map(prop('persones')))(results)
+const collectHelpData = (results: List, filteredBy: FilterType) => {
+  const ajudesPersones = compose(
+                            countBy(forEach(v => v)),
+                            flatten,
+                            map(prop('ajudes')),
+                            flatten,
+                            map(prop('persones')))(results)
+
+  const ajudesHabitatge = compose(
+                            countBy(forEach(v => v)),
+                            filter(v => v != null),
+                            flatten,
+                            map(path(['habitatge','ajudes'])))(results)
+  return merge(ajudesPersones,ajudesHabitatge)
 }
 
 const collectSexData = (results: List, filter: FilterType) => compose(
