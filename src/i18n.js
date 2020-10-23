@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import LngDetector from 'i18next-browser-languagedetector';
-import Backend from 'i18next-xhr-backend';
+import Backend from 'i18next-http-backend';
 import {initReactI18next} from 'react-i18next';
 import {STATIC_ROOT} from './config';
 import isDevelopment from './shared/isDevelopment';
@@ -18,7 +18,7 @@ const languageDetectorOptions = {
 
 i18n
   .use(Backend)
-    .use(lngDetector)
+  .use(lngDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'ca-ES',
@@ -26,7 +26,7 @@ i18n
     detection: languageDetectorOptions,
 
     // have a common namespace used around the full app
-    ns: ['translations'],
+    ns: ['translations','dashboard'],
     defaultNS: 'translations',
 
     debug: isDevelopment,
@@ -42,5 +42,7 @@ i18n
       wait: true
     }
   });
+
+
 
 export default i18n;

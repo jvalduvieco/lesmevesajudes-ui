@@ -10,7 +10,7 @@
     "chart.js": "^2.8.0",
     "i18next": "19.5.2",
     "i18next-browser-languagedetector": "5.0.0",
-    "i18next-xhr-backend": "3.2.2",
+    "i18next-http-backend": "1.0.21",
     "immutable": "^3.8.0",
     "moment": "2.27.0",
     "query-string": "^6.11.0",

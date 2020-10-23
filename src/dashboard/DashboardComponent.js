@@ -1,18 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Grid,Typography} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import {retrieveDashboard} from './DashboardAction';
-import {isEmpty,
-        compose,
-        keys,
-        last,
-        map,
-        prop,
-        reverse,
-        sortBy,
-        toPairs,
-        values} from 'ramda';
-import {HorizontalBar, Doughnut} from 'react-chartjs-2';
+import {isEmpty} from 'ramda';
 import SexChart from './charts/SexChartComponent';
 import AgeChart from './charts/AgeChartComponent';
 import HousingChart from './charts/HousingChartComponent';
@@ -21,6 +11,9 @@ import LaboralChart from './charts/LaboralChartComponent';
 import SchoolChart from './charts/SchoolChartComponent';
 import DisabledChart from './charts/DisabledChartComponent';
 import {SexType, YesNoType} from './DashboardTypes';
+import AidsTable from './AidsTable';
+import PositiveNegativeChart from './charts/PositiveNegativeComponent'
+import AidChart from './charts/AidChartComponent'
 
 type Props = {
   allResults: any,
@@ -39,31 +32,116 @@ type Props = {
 
 var helpData = {};
 var positiveNegativeData = {};
-var sexData= {"homes":0,"dones":0};
-var ageData= {"menors":0,"adults":0,"jubilats":0};
-/*const laboralData={"Treball per compte propi":10,
-                  "Treballa per compte propi":10,
-                  "Treball per compte d'altri jornada complerta":10,
-                  "Treball per compte d'altri jornada parcial":15,
-                  "Aturat":5,
-                  "Tasques de la llar":20,
-                  "Estudiant o pràctiques sense remunerar":10,
-                  "Jubilat/ada o prejubilat/ada":10,
-                  "Altres situacions":10}*/
+var sexData= {};
+var ageData= {};
 var laboralData={};
-var schoolData={"yes":0,"no":0};
-var disabledData={"yes":0,"no":0};
-var violenceData={"yes":0,"no":0};
+var schoolData={};
+var disabledData={};
+var violenceData={};
 var housingData = {} // simulation - residence - relacio_habitatge
 
 // return format: [["GG_270_mensual",3],["GE_051_03_mensual",2],...]
-const sortHelps = (helps) => compose(
-                                reverse,
-                                sortBy(v => last(values(v))
-                                ))(toPairs(helps))
 
-const getHelpLabels = (sortedHelpsArray) => map(v => prop(0,values(v)))(sortedHelpsArray)
-const getHelpValues = (sortedHelpsArray) => map(v => prop(1,values(v)))(sortedHelpsArray)
+
+const aidsData = [{
+	"codi": "HA_077_01",
+	"descripcio": "Prestacions econòmiques d'urgència social derivades de la mediació a Barcelona",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Habitatge"
+},
+{
+	"codi": "HG_077_02",
+	"descripcio": "Prestacions econòmiques d’especial urgència davant la pèrdua de l’habitatge per desnonament o execució hipotecària",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Habitatge"
+},{
+	"codi": "HG_077_03",
+	"descripcio": "Prestacions econòmiques d’especial urgència per al pagament de quotes d'amortització hipotecària",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Habitatge"
+},{
+	"codi": "HG_077_04",
+	"descripcio": "Prestacions econòmiques d’especial urgència per al pagament de deutes del lloguer",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Habitatge"
+},{
+	"codi": "HA_077_04_01",
+	"descripcio": "Ajut complementari a les prestacions econòmiques d’especial urgència per al pagament de deutes del lloguer",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Habitatge"
+},{
+	"codi": "HE_077_00",
+	"descripcio": "Subvencions per al pagament de lloguer",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Habitatge"
+},{
+	"codi": "EG_233",
+	"descripcio": "Beques menjador escolar de Barcelona",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":"Educació"
+},{
+	"codi": "GA_234_01",
+	"descripcio": "Vincles - Gratuïta",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GA_234_02",
+	"descripcio": "Vincles - Amb tauleta pròpia",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GG_270",
+	"descripcio": "Renda garantida ciutadana",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GE_051_04",
+	"descripcio": "Renda activa d'inserció aturats de llarga durada",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GE_051_01",
+	"descripcio": "Renda activa d'inserció discapacitat 33%",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GE_051_02",
+	"descripcio": "Renda activa d'inserció per a emigrants retornats",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GE_051_03",
+	"descripcio": "Renda activa d'inserció per a víctimes de violència de gènere o domèstica",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GA_246_01",
+	"descripcio": " Targeta rosa - Gratuïta",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+},{
+	"codi": "GA_246_02",
+	"descripcio": "Targeta rosa - Reduïda",
+	"data_inici": null,
+	"data_fi": null,
+	"tipus":null
+}]
+
 
 export const DashboardPage = (props :Props) => {
 
@@ -81,41 +159,19 @@ export const DashboardPage = (props :Props) => {
     positiveNegativeData = props.positiveNegativeData;
   }
 
-  const sortedHelp = sortHelps(helpData)
+  return (
+    <Grid xs={12} container spacing={5} root>
+      <Grid item>Número total de simulacions: {props.allResults ? props.allResults.length : 0}</Grid>
+      <Grid xs={12} item center>
+        <AidsTable aids={aidsData} />
+      </Grid>
 
-  const data1 = {
-    labels: getHelpLabels(sortedHelp),
-    datasets: [
-      {
-        label: 'Ajudes',
-        backgroundColor: '#eca1a6',
-        borderColor: 'rgba(255,99,132,1)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)',
-        data: getHelpValues(sortedHelp)
-      }
-    ]
-  };
-
-  const data2 = {
-  	labels: keys(positiveNegativeData),
-  	datasets: [{
-  		data: values(positiveNegativeData),
-  		backgroundColor: ['#bdcebe','#eca1a6','#d6cbd3']
-  	}]
-  };
-
-	return (
-    <Grid xs={12} container spacing={5}>
-      <Grid>Número total de simulacions: {props.results ? props.results.length : 0}</Grid>
       <Grid container direction="row" xs={12} item>
         <Grid xs={6} >
-          <HorizontalBar data={data1} />
+          <AidChart data={helpData} />
         </Grid>
         <Grid align='center' xs={6} item>
-          <Typography headlineMapping='h3' color='textPrimary'>Simulacions positives/negatives</Typography>
-          <Doughnut data={data2} />
+          <PositiveNegativeChart height={50} data={positiveNegativeData} />
         </Grid>
       </Grid>
       <Grid container direction="row" xs item>

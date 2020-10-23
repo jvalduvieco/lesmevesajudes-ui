@@ -352,5 +352,7 @@
     "link_HA_004": "/lesmevesajudes/es/ayudas/prestaciones-económicas-de-especial-urgencia-para-el-pago-de-deudas-del-alquiler",
     "link_GA_246": "/lesmevesajudes/es/ayudas/targeta-rosa",
     "link_GA_234": "/lesmevesajudes/es/ayudas/vincles-bcn",
-    "result_error":"No se ha podido realizar la simulación, pruebe más tarde"
+    "result_error":"No se ha podido realizar la simulación, pruebe más tarde",
+    "simulation.true":"Positives",
+    "simulation.false":"Negatives",
 }
