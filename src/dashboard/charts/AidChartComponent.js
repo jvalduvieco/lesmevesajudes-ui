@@ -17,15 +17,15 @@ const sortHelps = (helps) => compose(
                                 sortBy(v => last(values(v))
                                 ))(toPairs(helps))
 
-const getHelpLabels = (sortedHelpsArray) => map(v => prop(0,values(v)))(sortedHelpsArray)
-const getHelpValues = (sortedHelpsArray) => map(v => prop(1,values(v)))(sortedHelpsArray)
+const getLabels = (data) => map(v => prop(0,values(v)))(data)
+const getValues = (data) => map(v => prop(1,values(v)))(data)
 
 const AidChart = ({data}) => {
   const sorteHelps = sortHelps(data);
   const {t} = useTranslation('dashboard');
 
   const vals = {
-    labels: getHelpLabels(sorteHelps),
+    labels: getLabels(sorteHelps),
     datasets: [
       {
         label: 'Ajudes',
@@ -34,14 +34,20 @@ const AidChart = ({data}) => {
         borderWidth: 1,
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
         hoverBorderColor: 'rgba(255,99,132,1)',
-        data: getHelpValues(sorteHelps)
+        data: getValues(sorteHelps),
+        barThickness: 15
       }
     ]
   };
 
+  const options= {
+    legend:false,
+    maintainAspectRatio: true
+  };
+
   return <Grid align='center' xs item>
           <Typography headlineMapping='h3' color='textPrimary'>{t('aids')}</Typography>
-          <HorizontalBar data={vals} />
+          <HorizontalBar data={vals} options={options}/>
          </Grid>
 }
 

@@ -1,6 +1,6 @@
 import axios from 'axios/index';
-import {DASHBOARD_URL, SIMULATION_STORE_AUTH_TOKEN} from '../config';
-import {SHOW_DASHBOARD} from './DashboardReducer';
+import {AIDS_URL, DASHBOARD_URL, SIMULATION_STORE_AUTH_TOKEN} from '../config';
+import {SHOW_DASHBOARD_CHARTS, SHOW_DASHBOARD_AIDS} from './DashboardReducer';
 import {FilterType} from './DashboardTypes';
 import {
     compose,
@@ -97,6 +97,26 @@ const collectHousingData = (results: List, resultFilter: FilterType) => compose(
 const collectPositiveNegativeData = (results: List, resultFilter: FilterType) => countBy(prop('estatus'))(results)
 
 export const retrieveDashboard = () => async dispatch =>   {
+  axios.get(AIDS_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
+  		if (response.status === 210) {
+  			return dispatch({
+  				type: RETRIEVE_DASHBOARD_ERROR,
+  	      payload: TIMED_OUT_DASHBOARD,
+  			});
+  		}
+      return dispatch ({
+        type: SHOW_DASHBOARD_AIDS,
+        aids: response.data.aids,
+      });
+
+      }).catch(error => {
+      console.log(JSON.stringify(error, null, 2));
+      //dispatch({
+      //  type: RETRIEVE_SIMULATION_ERROR,
+      //  payload: RETRIEVE_SIMULATION_ERROR,
+      //});
+  });
+
   axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
   		if (response.status === 210) {
   			return dispatch({
@@ -106,7 +126,7 @@ export const retrieveDashboard = () => async dispatch =>   {
   		}
 
   		return dispatch ({
-        type: SHOW_DASHBOARD,
+        type: SHOW_DASHBOARD_CHARTS,
         results: response.data.dashboards,
         sexData: collectSexData(response.data.dashboards),
         schoolData: collectSchoolData(response.data.dashboards),

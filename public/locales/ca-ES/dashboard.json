@@ -1,5 +1,6 @@
 {
   "aids":"Ajudes",
+  "aids_empty": "No s'han pogut recuperar",
   "simulation_resultats" : "Resultats simulacions",
   "simulation_true":"Positives",
   "simulation_false":"Negatives",

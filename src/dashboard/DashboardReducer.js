@@ -1,6 +1,7 @@
 import {SexType, FilterType, YesNoType} from './DashboardTypes';
 
-export const SHOW_DASHBOARD = 'SHOW_DASHBOARD';
+export const SHOW_DASHBOARD_CHARTS = 'SHOW_DASHBOARD_CHARTS';
+export const SHOW_DASHBOARD_AIDS = 'SHOW_DASHBOARD_AIDS_TABLE';
 
 export default function(
   state = {results:[],
@@ -16,7 +17,12 @@ export default function(
   action
 ) {
   switch (action.type) {
-  case SHOW_DASHBOARD:
+  case SHOW_DASHBOARD_AIDS:
+      return {
+        ...state,
+        aids: action.aids,
+  }
+  case SHOW_DASHBOARD_CHARTS:
     return {
       ...state,
       results: action.results,
