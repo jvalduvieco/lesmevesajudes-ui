@@ -1,114 +1,122 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
-import {Grid} from '@material-ui/core';
+import {bindActionCreators} from 'redux';
+import {Grid, AppBar,Toolbar,IconButton,Typography} from '@material-ui/core';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
+import MenuIcon from '@material-ui/icons/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import {retrieveDashboard} from './DashboardAction';
-import {isEmpty} from 'ramda';
-import SexChart from './charts/SexChartComponent';
-import AgeChart from './charts/AgeChartComponent';
-import HousingChart from './charts/HousingChartComponent';
-import ViolenceChart from './charts/ViolenceChartComponent';
-import LaboralChart from './charts/LaboralChartComponent';
-import SchoolChart from './charts/SchoolChartComponent';
-import DisabledChart from './charts/DisabledChartComponent';
-import {SexType, YesNoType} from './DashboardTypes';
-import AidsTable from './AidsTable';
-import PositiveNegativeChart from './charts/PositiveNegativeComponent'
-import AidChart from './charts/AidChartComponent'
+import AidsDashboard from './aids/AidsDashboardComponent';
+import SimulationsDashboard from './simulations/SimulationsDashboardComponent';
+import AnalysisDashboard from './analysis/AnalysisDashboardComponent';
 
 type Props = {
   allResults: any,
-  positiveNegativeData: Object,
-  helpData: Object,
-  sexData: SexType,
-  schoolData: YesNoType,
-  violenceData: YesNoType,
-  disabledData: YesNoType,
-  laboralData: Object,
-  ageData: Object,
-  housingData: Object,
   dispatch: Function,
-  aids: List,
   retrieveDashboard: any
 };
 
-var helpData = {};
-var positiveNegativeData = {};
-var sexData= {};
-var ageData= {};
-var laboralData={};
-var schoolData={};
-var disabledData={};
-var violenceData={};
-var housingData = {}
-var aidsData = []
-
 export const DashboardPage = (props :Props) => {
 
-  if (isEmpty(props.allResults)) {
-    props.retrieveDashboard();
-  } else {
-    sexData = props.sexData;
-    schoolData = props.schoolData;
-    violenceData = props.violenceData;
-    disabledData = props.disabledData;
-    helpData = props.helpData;
-    laboralData = props.laboralData;
-    ageData = props.ageData;
-    housingData = props.housingData;
-    positiveNegativeData = props.positiveNegativeData;
-    aidsData = props.aids;
+  const [open, setOpen] = useState(false);
+  //const [componentPanel, setComponent] = useState(<AidsDashboard />);
+  const [componentPanel, setComponent] = useState(<SimulationsDashboard />);
+  const anchorRef = useRef(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
   }
 
-  return (
-    <Grid xs={12} container spacing={5} root>
-      <Grid item>Número total de simulacions: {props.allResults ? props.allResults.length : 0}</Grid>
-      <Grid xs={12} item center>
-        <AidsTable aids={aidsData} />
-      </Grid>
+  const showAidsDashboard = (event) => {
+    setComponent(<AidsDashboard/>);
+    handleClose(event);
+  }
 
-      <Grid container direction="row" xs={12} item>
-        <Grid xs={6} >
-          <AidChart data={helpData} />
-        </Grid>
-        <Grid align='center' xs={6} item>
-          <PositiveNegativeChart height={50} data={positiveNegativeData} />
-        </Grid>
-      </Grid>
-      <Grid container direction="row" xs item>
-        <LaboralChart data={laboralData} />
-        <Grid container direction="column" xs spacing={5}>
-          <Grid container direction="row" xs item>
-            <SexChart data={sexData} />
-            <AgeChart data={ageData} />
-          </Grid>
-          <Grid container direction="row" xs item>
-            <ViolenceChart data={violenceData} />
-            <SchoolChart data={schoolData} />
-          </Grid>
-          <Grid container direction="row" xs item>
-            <HousingChart data={housingData} />
-            <DisabledChart data={disabledData} />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>);
+  const showSimulationsDashboard = (event) => {
+    setComponent(<SimulationsDashboard />);
+    handleClose(event);
+  }
+
+  const showAnalysisDashboard = (event) => {
+    setComponent(<AnalysisDashboard />);
+    handleClose(event);
+  }
+
+  const prevOpen = React.useRef(open);
+  useEffect(() => {
+    //setFilterModalVisible(props.filtersVisible);
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
+  return (
+    <Grid>
+      <AppBar position="static" color="primary">
+        <Toolbar variant="dense">
+            <IconButton ref={anchorRef} onClick={handleToggle} edge="start" color="secondary" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}>
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                  <MenuItem onClick={showAidsDashboard}>Ajudes</MenuItem>
+                  <MenuItem onClick={showSimulationsDashboard}>Simulacions</MenuItem>
+                  <MenuItem onClick={showAnalysisDashboard}>Anàlisis de dades</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+          )}
+        </Popper>
+          <Typography variant="h6" color="inherit">Quadre de comandament</Typography>
+        </Toolbar>
+      </AppBar>
+    <Grid xs={12} container>
+      {componentPanel}
+    </Grid>
+  </Grid>);
 }
 
 function mapStateToProps(state) {
   var props = {
-	  allResults: state.dashboard.results,
-  	sexData: state.dashboard.sexData,
-    schoolData: state.dashboard.schoolData,
-    violenceData: state.dashboard.violenceData,
-    disabledData: state.dashboard.disabledData,
-    helpData: state.dashboard.helpData,
-    laboralData: state.dashboard.laboralData,
-    ageData: state.dashboard.ageData,
-    housingData: state.dashboard.housingData,
-    positiveNegativeData: state.dashboard.positiveNegativeData,
-    aids: state.dashboard.aids,
+	  allResults: state.dashboard.results
   };
   return props;
 }
 
-export default connect(mapStateToProps,{retrieveDashboard})(DashboardPage);
+const mapDispatchToProps = (dispatch, ownProps) => {
+	  return {
+      retrieveDashboard : bindActionCreators(retrieveDashboard, dispatch),
+      dispatch,
+	  }
+	}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

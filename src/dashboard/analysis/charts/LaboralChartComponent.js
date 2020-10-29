@@ -46,7 +46,7 @@ const LaboralChart = ({data}) => {
 
   };
 
-  return <Grid align='center' xs item>
+  return <Grid align='center' item>
           <Typography headlineMapping='h3' color='textPrimary'>{t('laboral')}</Typography>
           <HorizontalBar data={vals} options={options}/>
          </Grid>

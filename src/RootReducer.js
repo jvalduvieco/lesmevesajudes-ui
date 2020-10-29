@@ -11,6 +11,7 @@ import ResidenceReducer from './residence/ResidenceReducer';
 import ResultsReducer from './results/ResultsReducer';
 import AdminReducer from './admin/AdminReducer';
 import DashboardReducer from './dashboard/DashboardReducer';
+import AidsDashboardReducer from './dashboard/aids/AidsDashboardReducer';
 
 const rootReducer = combineReducers({
   family: FamilyReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   reportBug: ReportBugReducer,
   admin: AdminReducer,
   dashboard: DashboardReducer,
+  aidsDashboard: AidsDashboardReducer,
 });
 
 export default rootReducer;

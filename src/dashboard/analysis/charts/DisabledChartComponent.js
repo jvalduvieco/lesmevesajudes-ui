@@ -4,22 +4,22 @@ import {Grid,Typography} from '@material-ui/core';
 import {keys, map, values} from 'ramda';
 import {useTranslation} from 'react-i18next';
 
-const AgeChart = ({data}) => {
+const DisabledChart = ({data}) => {
 
   const {t} = useTranslation('dashboard');
 
   const vals = {
-    labels: map(v => t('edat_' + v))(keys(data)),
+    labels: map(v => t(v))(keys(data)),
     datasets: [{
       data: values(data),
-      backgroundColor: ['#eca1a6','#bdcebe']
+      backgroundColor: ['#bdcebe','#eca1a6']
     }]
   };
 
-  return <Grid align='center' xs item>
-          <Typography headlineMapping='h3' color='textPrimary'>{t('edat')}</Typography>
+  return <Grid align='center' item>
+          <Typography headlineMapping='h3' color='textPrimary'>{t('discapacitat')}</Typography>
           <Doughnut data={vals} />
-         </Grid>
+        </Grid>
 }
 
-export default AgeChart;
+export default DisabledChart;

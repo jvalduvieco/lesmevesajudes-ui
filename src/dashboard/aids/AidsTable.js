@@ -3,30 +3,36 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import {useTranslation} from 'react-i18next';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import CancelRounded from '@material-ui/icons/CancelRounded';
+import {filter}  from 'ramda';
+import {FilterType} from './AidsDashboardTypes';
 
 type Props = {
-  aids: List  ,
+  aids: List ,
+  filter: FilterType,
 }
-
 
 const AidsTable = (props: Props) => {
 
   const {t} = useTranslation('dashboard');
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
 
   const handleChangePage = (event, newPage) => {
      setPage(newPage);
    };
 
-   const handleChangeRowsPerPage = (event) => {
-     setRowsPerPage(parseInt(event.target.value, 10));
-     setPage(0);
-   };
+  const handleChangeRowsPerPage = (event) => {
+   setRowsPerPage(parseInt(event.target.value, 30));
+   setPage(0);
+  };
+
+  const getFilteredAids = (filter) => {
+    return filter(aid => aid.active === filter.active)(props.aids);
+  }
 
   return (
-    <Paper>
+    <Paper elevation={2}>
       <TableContainer component={Paper}>
         <Table size="small" /*className={classes.table}*/ aria-label="simple table">
           <TableHead>
@@ -35,14 +41,16 @@ const AidsTable = (props: Props) => {
               <TableCell>Descripció</TableCell>
               <TableCell>Data inici</TableCell>
               <TableCell>Data fi</TableCell>
-              <TableCell>Tipus</TableCell>
               <TableCell>Àmbit</TableCell>
+              <TableCell>Administració</TableCell>
               <TableCell>Activa</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {props.aids &&
-              props.aids.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              props.aids.filter(aid => aid.active === (props.filter ? props.filter.active: true))
+                        .filter(aid => props.filter && props.filter.admin ? aid.ambit === props.filter.admin : true)
+                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((aid) => (
               <TableRow key={aid.code}>
                 <TableCell component="th" scope="row">{aid.codi}</TableCell>
@@ -65,7 +73,7 @@ const AidsTable = (props: Props) => {
         </Table>
       </TableContainer>
       <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[20, 30, 50]}
           component="div"
           count={props.aids.length}
           rowsPerPage={rowsPerPage}

@@ -96,7 +96,7 @@ const collectHousingData = (results: List, resultFilter: FilterType) => compose(
                                                                             filter(has('habitatge')))(results)
 const collectPositiveNegativeData = (results: List, resultFilter: FilterType) => countBy(prop('estatus'))(results)
 
-export const retrieveDashboard = () => async dispatch =>   {
+export const retrieveAids = () => dispatch => {
   axios.get(AIDS_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
   		if (response.status === 210) {
   			return dispatch({
@@ -110,13 +110,15 @@ export const retrieveDashboard = () => async dispatch =>   {
       });
 
       }).catch(error => {
-      console.log(JSON.stringify(error, null, 2));
+        console.log(JSON.stringify(error, null, 2));
       //dispatch({
       //  type: RETRIEVE_SIMULATION_ERROR,
       //  payload: RETRIEVE_SIMULATION_ERROR,
       //});
-  });
+      });
+}
 
+export const retrieveDashboard = () => async dispatch =>   {
   axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
   		if (response.status === 210) {
   			return dispatch({

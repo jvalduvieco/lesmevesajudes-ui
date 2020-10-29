@@ -45,7 +45,7 @@ const AidChart = ({data}) => {
     maintainAspectRatio: true
   };
 
-  return <Grid align='center' xs item>
+  return <Grid align='center' item>
           <Typography headlineMapping='h3' color='textPrimary'>{t('aids')}</Typography>
           <HorizontalBar data={vals} options={options}/>
          </Grid>

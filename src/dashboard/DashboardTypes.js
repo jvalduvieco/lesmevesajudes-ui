@@ -33,6 +33,10 @@
 }
 */
 
+export type AidType = {
+  codi: String,
+  descripcio: String, 
+}
 
 export type ResultType = {
 

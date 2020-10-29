@@ -16,7 +16,7 @@ const PosiiveNegativeChart = ({data}) => {
   	}]
   };
 
-  return <Grid align='center' xs item>
+  return <Grid align='center' item>
           <Typography headlineMapping='h3' color='textPrimary'>{t('simulation_resultats')}</Typography>
           <Doughnut data={vals} />
          </Grid>

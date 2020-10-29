@@ -1,5 +1,7 @@
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {MuiThemeProvider} from '@material-ui/core/styles';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 import React, {Component, Fragment, Suspense} from 'react';
 import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
@@ -32,26 +34,28 @@ class App extends Component {
     return (
       <Suspense fallback="">
         <MuiThemeProvider theme={theme}>
-          <div>
-            <CssBaseline/>
-            <Provider store={store}>
-              <HashRouter>
-                <ScrollToTop>
-                  <Switch>
-                    <Route exact={true} path='/' component={WizardPage}/>
-                    <Route path='/admin' component={WizardPage}/>
-                    <Route path='/dashboard' component={DashboardPage}/>
-                    {isDevelopment &&
-                    <Fragment>
-                      <Route path='/reportBug' component={ReportBugPage}/>
-                      <Route path='/intents' component={intents(WizardPage)}/>
-                    </Fragment>
-                    }
-                  </Switch>
-                </ScrollToTop>
-              </HashRouter>
-            </Provider>
-          </div>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <div>
+              <CssBaseline/>
+              <Provider store={store}>
+                <HashRouter>
+                  <ScrollToTop>
+                    <Switch>
+                      <Route exact={true} path='/' component={WizardPage}/>
+                      <Route path='/admin' component={WizardPage}/>
+                      <Route path='/dashboard' component={DashboardPage}/>
+                      {isDevelopment &&
+                      <Fragment>
+                        <Route path='/reportBug' component={ReportBugPage}/>
+                        <Route path='/intents' component={intents(WizardPage)}/>
+                      </Fragment>
+                      }
+                    </Switch>
+                  </ScrollToTop>
+                </HashRouter>
+              </Provider>
+            </div>
+          </MuiPickersUtilsProvider>
         </MuiThemeProvider>
       </Suspense>
     );

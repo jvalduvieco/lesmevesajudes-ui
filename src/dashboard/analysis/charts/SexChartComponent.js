@@ -4,22 +4,22 @@ import {Grid,Typography} from '@material-ui/core';
 import {keys, map, values} from 'ramda';
 import {useTranslation} from 'react-i18next';
 
-const HousingChart = ({data}) => {
+const SexChart = ({data}) => {
 
   const {t} = useTranslation('dashboard');
 
   const vals = {
-    labels: map(v => t('habitatge_' + v))(keys(data)),
+    labels: map(v => t('sexe_' + v))(keys(data)),
     datasets: [{
       data: values(data),
-      backgroundColor: ['#d6cbd3','#eca1a6','#bdcebe','#ada397','#e3eaa7','#c1946a','#92a8d1','#f7cac9','#d5e1df']
+      backgroundColor: ['#eca1a6','#bdcebe']
     }]
   };
 
-  return <Grid align='center' xs item>
-          <Typography headlineMapping='h3' color='textPrimary'>{t('habitatge')}</Typography>
+  return <Grid align='center' item>
+          <Typography headlineMapping='h3' color='textPrimary'>Sexe</Typography>
           <Doughnut data={vals} />
          </Grid>
 }
 
-export default HousingChart;
+export default SexChart;

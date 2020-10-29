@@ -4,22 +4,22 @@ import {Grid,Typography} from '@material-ui/core';
 import {keys, map, values} from 'ramda';
 import {useTranslation} from 'react-i18next';
 
-const ViolenceChart = ({data}) => {
+const HousingChart = ({data}) => {
 
   const {t} = useTranslation('dashboard');
 
   const vals = {
-    labels: map(v => t(v))(keys(data)),
+    labels: map(v => t('habitatge_' + v))(keys(data)),
     datasets: [{
       data: values(data),
-      backgroundColor: ['#bdcebe','#eca1a6']
+      backgroundColor: ['#d6cbd3','#eca1a6','#bdcebe','#ada397','#e3eaa7','#c1946a','#92a8d1','#f7cac9','#d5e1df']
     }]
   };
 
-  return <Grid align='center' xs item>
-          <Typography headlineMapping='h3' color='textPrimary'>Violència gènere/domèstica</Typography>
+  return <Grid align='center' item>
+          <Typography headlineMapping='h3' color='textPrimary'>{t('habitatge')}</Typography>
           <Doughnut data={vals} />
          </Grid>
 }
 
-export default ViolenceChart;
+export default HousingChart;

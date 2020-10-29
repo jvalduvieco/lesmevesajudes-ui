@@ -28,6 +28,10 @@ html {
     display: none;
 }
 
+.dashboard-filter {
+  padding-left: 10px;
+}
+
 @media print {
 
   .material-icons {
@@ -77,7 +81,7 @@ html {
     flex-basis: 33%;
     max-width: 33%;
  }
- 
+
   .Component-titleText-1395 {
       padding: 0;
   }

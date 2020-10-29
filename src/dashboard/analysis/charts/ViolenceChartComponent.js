@@ -4,7 +4,7 @@ import {Grid,Typography} from '@material-ui/core';
 import {keys, map, values} from 'ramda';
 import {useTranslation} from 'react-i18next';
 
-const DisabledChart = ({data}) => {
+const ViolenceChart = ({data}) => {
 
   const {t} = useTranslation('dashboard');
 
@@ -16,10 +16,10 @@ const DisabledChart = ({data}) => {
     }]
   };
 
-  return <Grid align='center' xs item>
-          <Typography headlineMapping='h3' color='textPrimary'>{t('discapacitat')}</Typography>
+  return <Grid align='center' item>
+          <Typography headlineMapping='h3' color='textPrimary'>Violència gènere/domèstica</Typography>
           <Doughnut data={vals} />
-        </Grid>
+         </Grid>
 }
 
-export default DisabledChart;
+export default ViolenceChart;
