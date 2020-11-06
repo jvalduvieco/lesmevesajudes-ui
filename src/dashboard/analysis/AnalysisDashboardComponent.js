@@ -13,7 +13,7 @@ import LaboralChart from './charts/LaboralChartComponent';
 import SchoolChart from './charts/SchoolChartComponent';
 import DisabledChart from './charts/DisabledChartComponent';
 import {SexType, YesNoType} from '../DashboardTypes';
-import {retrieveDashboard} from '../DashboardAction';
+import {retrieveDashboardProfilesData} from '../DashboardAction';
 
 type Props = {
   allResults: [],
@@ -43,7 +43,7 @@ var aidsData = [];
 const SimulationsDashboard = (props :Props) => {
 
   if (isEmpty(props.allResults)) {
-    props.retrieveDashboard();
+    props.retrieveDashboardProfilesData();
   }  else {
     sexData = props.sexData;
     schoolData = props.schoolData;
@@ -109,7 +109,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    retrieveDashboard : bindActionCreators(retrieveDashboard, dispatch),
+    retrieveDashboardProfilesData : bindActionCreators(retrieveDashboardProfilesData, dispatch),
     dispatch,
   }
 }

@@ -9,12 +9,14 @@ import CardContent from '@material-ui/core/CardContent';
 import PositiveNegativeChart from './charts/PositiveNegativeComponent';
 import AidChart from '../charts/AidChartComponent';
 import {isEmpty} from 'ramda';
-import {retrieveDashboard} from '../DashboardAction';
+import {retrieveResults, countEdited} from '../DashboardAction';
 
 type Props = {
-  helpData: Object,
+  allResults: [],
   positiveNegativeData: Object,
-  retrieveDashboard: Function,
+  retrieveResults: Function,
+  countEdited: Function,
+  editedCount: 0,
 };
 
 var helpData = {};
@@ -23,7 +25,8 @@ var positiveNegativeData = {};
 const SimulationsDashboard = (props :Props) => {
 
   if (isEmpty(props.allResults)) {
-    props.retrieveDashboard();
+    props.retrieveResults();
+    props.countEdited();
   }  else {
     helpData = props.helpData;
     positiveNegativeData = props.positiveNegativeData;
@@ -49,7 +52,7 @@ const SimulationsDashboard = (props :Props) => {
             <Card>
               <CardContent>
                 <Typography align='center' variant="h5">Simulacions recalculades</Typography>
-                <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
+                <Typography align='center'>{props.editedCount}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -60,8 +63,8 @@ const SimulationsDashboard = (props :Props) => {
           <Grid item xs={6}>
             <Card>
               <CardContent>
-                <Typography align='center' variant="h5">Simulacions recuperades</Typography>
-                <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
+                <Typography align='center' variant="h5">Número de persones</Typography>
+                <Typography align='center'>{'Gràfica amb quantes simulacions tenen quin número de persones. Duda: barras horizontales o verticales? U otro tipo de gràfica'}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -69,6 +72,7 @@ const SimulationsDashboard = (props :Props) => {
             <Card>
               <CardContent>
                 <PositiveNegativeChart height={50} data={positiveNegativeData} />
+                <Typography align='center'>{'Comentari: donat que hi ha 3 indicadors, potser seria millor mostrar la sèrie per mesos, i fer la representació gràfica de positives/negatives de l’acuulat anual (serà més significatiu que el d’un mes)'}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -115,14 +119,16 @@ const SimulationsDashboard = (props :Props) => {
 
 const mapStateToProps = (state) => {
   return {
-    helpData: state.dashboard.results,
+    allResults: state.dashboard.results ? state.dashboard.results: [],
     positiveNegativeData: state.dashboard.positiveNegativeData,
+    editedCount: state.dashboard.editedCount,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    retrieveDashboard : bindActionCreators(retrieveDashboard, dispatch),
+    retrieveResults : bindActionCreators(retrieveResults, dispatch),
+    countEdited : bindActionCreators(countEdited, dispatch),
     dispatch,
   }
 }

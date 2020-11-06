@@ -2,6 +2,8 @@ import {SexType, FilterType, YesNoType} from './DashboardTypes';
 
 export const SHOW_DASHBOARD_CHARTS = 'SHOW_DASHBOARD_CHARTS';
 export const SHOW_DASHBOARD_AIDS = 'SHOW_DASHBOARD_AIDS_TABLE';
+export const SHOW_DASHBOARD_EDITED_COUNT = 'SHOW_DASHBOARD_EDITED_COUNT';
+export const SHOW_DASHBOARD_SIMULATIONS = 'SHOW_DASHBOARD_SIMULATIONS';
 
 export const showFiltersAction = {
     type: 'SHOW_DASHBOARD_FILTERS'
@@ -33,6 +35,12 @@ export default function(
         ...state,
         aids: action.aids,
   }
+  case SHOW_DASHBOARD_SIMULATIONS:
+    return {
+      ...state,
+      results: action.results,
+      positiveNegativeData: action.positiveNegativeData,
+  }
   case SHOW_DASHBOARD_CHARTS:
     return {
       ...state,
@@ -46,9 +54,13 @@ export default function(
       ageData: action.ageData,
       housingData: action.housingData,
       positiveNegativeData: action.positiveNegativeData,
+  }
+  case SHOW_DASHBOARD_EDITED_COUNT:
+    return {
+      ...state,
+      editedCount: action.editedCount,
     }
   default:
     return state;
   }
-
 }

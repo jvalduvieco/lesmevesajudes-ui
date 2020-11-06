@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Grid} from '@material-ui/core';
-import {isEmpty, values} from 'ramda';
+import {isEmpty} from 'ramda';
 import AidsTable from './AidsTable';
 import FilterPanel from './FilterPanel';
 import {retrieveAids} from '../DashboardAction';
@@ -13,8 +13,6 @@ type Props = {
   filter: FilterType,
   retrieveAids: any
 };
-
-var aidsData = [];
 
 const AidsDashboard = (props :Props) => {
 

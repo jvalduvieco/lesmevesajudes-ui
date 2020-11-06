@@ -1,10 +1,8 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -74,6 +72,8 @@ const FilterPanel = (props: Props) => {
         date: selectedDate
       });
       break;
+    default:
+        // do nothing
     }
   }
 
@@ -93,7 +93,7 @@ const FilterPanel = (props: Props) => {
           checked={filter.active}
           color="primary"
           onChange={handleFilter}/>
-        
+
         <FormLabel>Mes</FormLabel>
         <Fragment>
           <DatePicker

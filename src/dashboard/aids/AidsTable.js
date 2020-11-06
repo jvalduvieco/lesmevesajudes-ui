@@ -3,7 +3,6 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import {useTranslation} from 'react-i18next';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import CancelRounded from '@material-ui/icons/CancelRounded';
-import {filter}  from 'ramda';
 import {FilterType} from './AidsDashboardTypes';
 
 type Props = {
@@ -26,10 +25,6 @@ const AidsTable = (props: Props) => {
    setRowsPerPage(parseInt(event.target.value, 30));
    setPage(0);
   };
-
-  const getFilteredAids = (filter) => {
-    return filter(aid => aid.active === filter.active)(props.aids);
-  }
 
   return (
     <Paper elevation={2}>

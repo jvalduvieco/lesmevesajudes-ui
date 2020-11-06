@@ -9,7 +9,6 @@ import Popper from '@material-ui/core/Popper';
 import MenuIcon from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import {retrieveDashboard} from './DashboardAction';
 import AidsDashboard from './aids/AidsDashboardComponent';
 import SimulationsDashboard from './simulations/SimulationsDashboardComponent';
 import AnalysisDashboard from './analysis/AnalysisDashboardComponent';
@@ -111,12 +110,4 @@ function mapStateToProps(state) {
   return props;
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-	  return {
-      retrieveDashboard : bindActionCreators(retrieveDashboard, dispatch),
-      dispatch,
-	  }
-	}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);
+export default connect(mapStateToProps)(DashboardPage);

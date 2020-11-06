@@ -1,6 +1,6 @@
 import axios from 'axios/index';
-import {AIDS_URL, DASHBOARD_URL, SIMULATION_STORE_AUTH_TOKEN} from '../config';
-import {SHOW_DASHBOARD_CHARTS, SHOW_DASHBOARD_AIDS} from './DashboardReducer';
+import {AIDS_URL, DASHBOARD_URL, DASHBOARD_COUNT_EDITED, SIMULATION_STORE_AUTH_TOKEN} from '../config';
+import {SHOW_DASHBOARD_CHARTS, SHOW_DASHBOARD_AIDS, SHOW_DASHBOARD_EDITED_COUNT, SHOW_DASHBOARD_SIMULATIONS} from './DashboardReducer';
 import {FilterType} from './DashboardTypes';
 import {
     compose,
@@ -118,7 +118,31 @@ export const retrieveAids = () => dispatch => {
       });
 }
 
-export const retrieveDashboard = () => async dispatch =>   {
+export const retrieveResults = () => async dispatch =>   {
+  axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
+      if (response.status === 210) {
+        return dispatch({
+          type: RETRIEVE_DASHBOARD_ERROR,
+          payload: TIMED_OUT_DASHBOARD,
+        });
+      }
+
+      return dispatch ({
+        type: SHOW_DASHBOARD_SIMULATIONS,
+        results: response.data.dashboards,
+        positiveNegativeData: collectPositiveNegativeData(response.data.dashboards),
+      });
+
+    }).catch(error => {
+      console.log(JSON.stringify(error, null, 2));
+      //dispatch({
+      //  type: RETRIEVE_SIMULATION_ERROR,
+      //  payload: RETRIEVE_SIMULATION_ERROR,
+      //});
+    });
+}
+
+export const retrieveDashboardProfilesData = () => async dispatch =>   {
   axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
   		if (response.status === 210) {
   			return dispatch({
@@ -129,7 +153,7 @@ export const retrieveDashboard = () => async dispatch =>   {
 
   		return dispatch ({
         type: SHOW_DASHBOARD_CHARTS,
-        results: response.data.dashboards,
+        //results: response.data.dashboards,
         sexData: collectSexData(response.data.dashboards),
         schoolData: collectSchoolData(response.data.dashboards),
         violenceData: collectViolenceData(response.data.dashboards),
@@ -138,7 +162,6 @@ export const retrieveDashboard = () => async dispatch =>   {
         laboralData: collectLaboralData(response.data.dashboards),
         ageData: collectAgeData(response.data.dashboards),
         housingData: collectHousingData(response.data.dashboards),
-        positiveNegativeData: collectPositiveNegativeData(response.data.dashboards)
   		});
 
   	}).catch(error => {
@@ -148,4 +171,26 @@ export const retrieveDashboard = () => async dispatch =>   {
       //  payload: RETRIEVE_SIMULATION_ERROR,
       //});
     });
+}
+
+export const countEdited = () => async dispatch =>   {
+  axios.get(DASHBOARD_COUNT_EDITED, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}})
+        .then(response => {
+          if (response.status === 210) {
+            return dispatch({
+              type: RETRIEVE_DASHBOARD_ERROR,
+              payload: TIMED_OUT_DASHBOARD
+            });
+          }
+          return dispatch ({
+            type: SHOW_DASHBOARD_EDITED_COUNT,
+            editedCount: response.data.count
+          })
+        }).catch(error => {
+          console.log(JSON.stringify(error, null, 2));
+          //dispatch({
+          //  type: RETRIEVE_SIMULATION_ERROR,
+          //  payload: RETRIEVE_SIMULATION_ERROR,
+          //});
+        });
 }
