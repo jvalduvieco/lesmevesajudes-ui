@@ -151,17 +151,27 @@ export const retrieveDashboardProfilesData = () => async dispatch =>   {
   			});
   		}
 
+
+      var collectedSexData = collectSexData(response.data.dashboards);
+      var collectedSchoolData = collectSchoolData(response.data.dashboards);
+      var collectedViolenceData = collectViolenceData(response.data.dashboards);
+      var collectedDisabledData = collectDisabledData(response.data.dashboards);
+      //var collectedHelpData = collectHelpData(response.data.dashboards);
+      var collectedLaboralData = collectLaboralData(response.data.dashboards);
+      var collectedAgeData = collectAgeData(response.data.dashboards);
+      var collectedHousingData = collectHousingData(response.data.dashboards);
+
   		return dispatch ({
         type: SHOW_DASHBOARD_CHARTS,
-        //results: response.data.dashboards,
-        sexData: collectSexData(response.data.dashboards),
-        schoolData: collectSchoolData(response.data.dashboards),
-        violenceData: collectViolenceData(response.data.dashboards),
-        disabledData: collectDisabledData(response.data.dashboards),
-        helpData: collectHelpData(response.data.dashboards),
-        laboralData: collectLaboralData(response.data.dashboards),
-        ageData: collectAgeData(response.data.dashboards),
-        housingData: collectHousingData(response.data.dashboards),
+        results: response.data.dashboards,
+        sexData: collectedSexData,
+        schoolData: collectedSchoolData,
+        violenceData: collectedViolenceData,
+        disabledData: collectedViolenceData,
+        //helpData: collectedDisabledData,
+        laboralData: collectedLaboralData,
+        ageData: collectedAgeData,
+        housingData: collectedHousingData,
   		});
 
   	}).catch(error => {

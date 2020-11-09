@@ -47,7 +47,7 @@ const FilterPanel = (props: Props) => {
   const [selectedDate, handleDateChange] = useState(new Date());
 
   return (
-    <Paper elevation={2}>
+
       <FormControl className={classes.formControl}>
         <FormLabel>Mes</FormLabel>
         <Fragment>
@@ -62,7 +62,6 @@ const FilterPanel = (props: Props) => {
           />
         </Fragment>
       </FormControl>
-    </Paper>
     );
 }
 

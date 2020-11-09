@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import PositiveNegativeChart from './charts/PositiveNegativeComponent';
+import ChronologicDataChart from './charts/ChronologicDataComponent';
+import PersonsChart from './charts/PersonsChartComponent';
 import AidChart from '../charts/AidChartComponent';
 import {isEmpty} from 'ramda';
 import {retrieveResults, countEdited} from '../DashboardAction';
@@ -39,12 +41,15 @@ const SimulationsDashboard = (props :Props) => {
       </Grid>
       <Grid container direction='column' xs={9} spacing={5} item>
         {/* row 1*/}
-        <Grid container direction='row' xs={9} spacing={5} item>
-          <Grid item xs={6}>
+        <Grid container direction='row' xs={12} spacing={5} item>
+          <Grid item xs={12}>
             <Card>
               <CardContent>
-                <Typography align='center' variant="h5">Número total de simulacions</Typography>
-                <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
+                <ChronologicDataChart />
+                {/*
+                  <Typography align='center' variant="h5">Número total de simulacions</Typography>
+                  <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
+
               </CardContent>
             </Card>
           </Grid>
@@ -53,18 +58,20 @@ const SimulationsDashboard = (props :Props) => {
               <CardContent>
                 <Typography align='center' variant="h5">Simulacions recalculades</Typography>
                 <Typography align='center'>{props.editedCount}</Typography>
+            */}
               </CardContent>
             </Card>
           </Grid>
         </Grid>
 
         {/* row 2*/}
-        <Grid container direction='row' xs={9}  spacing={5} item>
+        <Grid container direction='row' xs={12}  spacing={5} item>
           <Grid item xs={6}>
             <Card>
               <CardContent>
                 <Typography align='center' variant="h5">Número de persones</Typography>
-                <Typography align='center'>{'Gràfica amb quantes simulacions tenen quin número de persones. Duda: barras horizontales o verticales? U otro tipo de gràfica'}</Typography>
+                <PersonsChart />
+                <Typography align='center'>{'Quin interval de temps volem mostrar: mes seleccionat o anual?'}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -72,7 +79,7 @@ const SimulationsDashboard = (props :Props) => {
             <Card>
               <CardContent>
                 <PositiveNegativeChart height={50} data={positiveNegativeData} />
-                <Typography align='center'>{'Comentari: donat que hi ha 3 indicadors, potser seria millor mostrar la sèrie per mesos, i fer la representació gràfica de positives/negatives de l’acuulat anual (serà més significatiu que el d’un mes)'}</Typography>
+                <Typography align='center'>{'Representació gràfica de positives/negatives de l’acuulat anual (serà més significatiu que el d’un mes)'}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -81,41 +88,6 @@ const SimulationsDashboard = (props :Props) => {
     </Grid>
   );
 }
-
-{/*<Grid container direction="row">
-  <Grid xs={3} container spacing={5}>
-    <FilterPanel />
-  </Grid>
-  <Grid xs={9} container direction="colum" root>
-    <Grid container direction="row" xs item spacing={5} item>
-      <Grid xs={6} item>
-        <Card>
-          <CardContent>
-          <Typography align='center' variant="h5">Número total de simulacions</Typography>
-          <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-
-    <Grid xs={9} container direction="row" xs item spacing={5} item>
-      <Grid align='center' xs={6} item>
-        <Card>
-          <CardContent>
-            <PositiveNegativeChart height={50} data={positiveNegativeData} />
-          </CardContent>
-        </Card>
-      </Grid>
-      <Grid xs={6} item>
-        <Card>
-          <CardContent>
-            <AidChart data={helpData} />
-          </CardContent>
-        </Card>
-      </Grid>
-    </Grid>
-  </Grid>
-</Grid>*/}
 
 const mapStateToProps = (state) => {
   return {

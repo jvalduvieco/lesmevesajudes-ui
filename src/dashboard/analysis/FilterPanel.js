@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(5),
   },
   aidCheckBox: {
     padding: 0,
@@ -50,7 +50,6 @@ const FilterPanel = (props: Props) => {
   const {t} = useTranslation('dashboard');
 
   return (
-    <Paper elevation={2}>
       <FormControl className={classes.formControl}>
       {props.aids &&
 
@@ -92,11 +91,9 @@ const FilterPanel = (props: Props) => {
         </RadioGroup>
 
         <Grid>
-          <Button onClick={() => props.closePanel()}>Tancar</Button>
           <Button onClick={() => props.closePanel()}>Netejar</Button>
         </Grid>
       </FormControl>
-    </Paper>
     );
 }
 

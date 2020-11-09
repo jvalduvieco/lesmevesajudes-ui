@@ -9,7 +9,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 import { DatePicker } from "@material-ui/pickers";
 import {useTranslation} from 'react-i18next';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import {FilterType} from './AidsDashboardTypes';
 import {isNil} from 'ramda';
 
@@ -24,12 +24,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   formControl: {
-    margin: theme.spacing(3),
-  },
-  aidCheckBox: {
-    padding: 0,
-    paddingLeft: 10,
-    fontSize: 10,
+    margin: theme.spacing(5),
   },
   label: {
        fontSize: '0.8em'
@@ -85,7 +80,6 @@ const FilterPanel = (props: Props) => {
   })
 
   return (
-    <Paper elevation={2}>
       <FormControl className={classes.formControl}>
         <FormLabel>Activa</FormLabel>
         <Switch
@@ -126,7 +120,6 @@ const FilterPanel = (props: Props) => {
         </RadioGroup>
 
       </FormControl>
-    </Paper>
     );
 }
 
