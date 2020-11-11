@@ -18,6 +18,8 @@ export default function(
           results:[],
           aids: [],
           filter: FilterType,
+          totalSimulationsByYearData: Object,
+          recalculatedSimulationsByYearData: Object,
           helpData: Object,
           sexData: SexType,
           schoolType: YesNoType,
@@ -40,6 +42,9 @@ export default function(
       ...state,
       results: action.results,
       positiveNegativeData: action.positiveNegativeData,
+      totalSimulationsByMonthData: action.totalSimulationsByMonthData,
+      recalculatedSimulationsByMonthData: action.recalculatedSimulationsByMonthData,
+
   }
   case SHOW_DASHBOARD_CHARTS:
     return {

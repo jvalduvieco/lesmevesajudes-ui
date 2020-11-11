@@ -16,6 +16,8 @@ import {retrieveResults, countEdited} from '../DashboardAction';
 type Props = {
   allResults: [],
   positiveNegativeData: Object,
+  totalSimulationsByMonthData: Object,
+  recalculatedSimulationsByMonthData: Object,
   retrieveResults: Function,
   countEdited: Function,
   editedCount: 0,
@@ -45,7 +47,7 @@ const SimulationsDashboard = (props :Props) => {
           <Grid item xs={12}>
             <Card>
               <CardContent>
-                <ChronologicDataChart />
+                <ChronologicDataChart totalSimuationsByMonth={props.totalSimulationsByMonthData} recalculatedSimulationsByMonth={props.recalculatedSimulationsByMonthData}/>
                 {/*
                   <Typography align='center' variant="h5">Número total de simulacions</Typography>
                   <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
@@ -92,6 +94,8 @@ const SimulationsDashboard = (props :Props) => {
 const mapStateToProps = (state) => {
   return {
     allResults: state.dashboard.results ? state.dashboard.results: [],
+    totalSimulationsByMonthData: state.dashboard.totalSimulationsByMonthData,
+    recalculatedSimulationsByMonthData: state.dashboard.recalculatedSimulationsByMonthData,
     positiveNegativeData: state.dashboard.positiveNegativeData,
     editedCount: state.dashboard.editedCount,
   }

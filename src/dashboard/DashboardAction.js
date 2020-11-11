@@ -3,6 +3,7 @@ import {AIDS_URL, DASHBOARD_URL, DASHBOARD_COUNT_EDITED, SIMULATION_STORE_AUTH_T
 import {SHOW_DASHBOARD_CHARTS, SHOW_DASHBOARD_AIDS, SHOW_DASHBOARD_EDITED_COUNT, SHOW_DASHBOARD_SIMULATIONS} from './DashboardReducer';
 import {FilterType} from './DashboardTypes';
 import {
+    ascend,
     compose,
     countBy,
     equals,
@@ -10,11 +11,14 @@ import {
     flatten,
     forEach,
     has,
+    isNil,
     map,
+    not,
     merge,
     path,
     pluck,
     prop,
+    sortWith,
     values } from 'ramda';
 
 export const RETRIEVE_DASHBOARD_ERROR = 'RETRIEVE_DASHBOARD_ERROR';
@@ -96,6 +100,35 @@ const collectHousingData = (results: List, resultFilter: FilterType) => compose(
                                                                             filter(has('habitatge')))(results)
 const collectPositiveNegativeData = (results: List, resultFilter: FilterType) => countBy(prop('estatus'))(results)
 
+
+const months = ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']
+const isOriginal = result => isNil(prop('id_parent',result));
+const isRecalculated = result => not(isOriginal(result))
+const hasDate = result => !isNil(result.data)
+const currentYear = new Date().getFullYear()
+const getMonth = result => months[getMonthNumber(result)]
+const getMonthNumber = result => parseInt(result.data.substring(5, 7))
+const getYear = result => parseInt(result.data.substring(0, 4))
+const isCurrentYearResult = result => hasDate(result) && (getYear(result) === currentYear)
+
+const collectSimulationsByMonth = (results: List) => {
+  var asdf = compose(
+                countBy(getMonth),
+                sortWith([ascend(getMonthNumber)]),
+                filter(isOriginal),
+                filter(isCurrentYearResult))(results)
+  return asdf;
+}
+
+const collectRecalculatedSimulationsByMonth = (results: List) => {
+  var asdf = compose(
+                countBy(getMonth),
+                sortWith([ascend(getMonthNumber)]),
+                filter(isRecalculated),
+                filter(isCurrentYearResult))(results)
+  return asdf;
+}
+
 export const retrieveAids = () => dispatch => {
   axios.get(AIDS_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
   		if (response.status === 210) {
@@ -131,6 +164,8 @@ export const retrieveResults = () => async dispatch =>   {
         type: SHOW_DASHBOARD_SIMULATIONS,
         results: response.data.dashboards,
         positiveNegativeData: collectPositiveNegativeData(response.data.dashboards),
+        totalSimulationsByMonthData: collectSimulationsByMonth(response.data.dashboards),
+        recalculatedSimulationsByMonthData: collectRecalculatedSimulationsByMonth(response.data.dashboards),
       });
 
     }).catch(error => {
