@@ -44,7 +44,7 @@ export default function(
       positiveNegativeData: action.positiveNegativeData,
       totalSimulationsByMonthData: action.totalSimulationsByMonthData,
       recalculatedSimulationsByMonthData: action.recalculatedSimulationsByMonthData,
-
+      simulationsByPersonsData: action.simulationsByPersonsData,
   }
   case SHOW_DASHBOARD_CHARTS:
     return {

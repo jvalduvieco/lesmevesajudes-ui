@@ -19,8 +19,9 @@ type Props = {
   totalSimulationsByMonthData: Object,
   recalculatedSimulationsByMonthData: Object,
   retrieveResults: Function,
-  countEdited: Function,
-  editedCount: 0,
+  simulationsByPersonsData: Object
+  //countEdited: Function,
+  //editedCount: 0,
 };
 
 var helpData = {};
@@ -47,20 +48,8 @@ const SimulationsDashboard = (props :Props) => {
           <Grid item xs={12}>
             <Card>
               <CardContent>
-                <ChronologicDataChart totalSimuationsByMonth={props.totalSimulationsByMonthData} recalculatedSimulationsByMonth={props.recalculatedSimulationsByMonthData}/>
-                {/*
-                  <Typography align='center' variant="h5">Número total de simulacions</Typography>
-                  <Typography align='center'>{props.allResults ? props.allResults.length : 0}</Typography>
-
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={6}>
-            <Card>
-              <CardContent>
-                <Typography align='center' variant="h5">Simulacions recalculades</Typography>
-                <Typography align='center'>{props.editedCount}</Typography>
-            */}
+                <ChronologicDataChart totalSimuationsByMonth={props.totalSimulationsByMonthData}
+                                      recalculatedSimulationsByMonth={props.recalculatedSimulationsByMonthData}/>
               </CardContent>
             </Card>
           </Grid>
@@ -72,8 +61,8 @@ const SimulationsDashboard = (props :Props) => {
             <Card>
               <CardContent>
                 <Typography align='center' variant="h5">Número de persones</Typography>
-                <PersonsChart />
-                <Typography align='center'>{'Quin interval de temps volem mostrar: mes seleccionat o anual?'}</Typography>
+                <PersonsChart data={props.simulationsByPersonsData} />
+                <Typography align='center'>{'Valor corresponents al any en curs'}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -81,7 +70,7 @@ const SimulationsDashboard = (props :Props) => {
             <Card>
               <CardContent>
                 <PositiveNegativeChart height={50} data={positiveNegativeData} />
-                <Typography align='center'>{'Representació gràfica de positives/negatives de l’acuulat anual (serà més significatiu que el d’un mes)'}</Typography>
+                <Typography align='center'>{'Valor corresponents al any en curs'}</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -96,8 +85,8 @@ const mapStateToProps = (state) => {
     allResults: state.dashboard.results ? state.dashboard.results: [],
     totalSimulationsByMonthData: state.dashboard.totalSimulationsByMonthData,
     recalculatedSimulationsByMonthData: state.dashboard.recalculatedSimulationsByMonthData,
+    simulationsByPersonsData: state.dashboard.simulationsByPersonsData,
     positiveNegativeData: state.dashboard.positiveNegativeData,
-    editedCount: state.dashboard.editedCount,
   }
 }
 

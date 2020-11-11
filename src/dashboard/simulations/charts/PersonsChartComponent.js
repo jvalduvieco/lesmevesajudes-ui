@@ -3,7 +3,9 @@ import {HorizontalBar} from 'react-chartjs-2';
 import {Grid, Typography} from '@material-ui/core';
 import {compose,
         last,
+        keys,
         map,
+        pipe,
         prop,
         reverse,
         sortBy,
@@ -20,12 +22,14 @@ const sortHelps = (helps) => compose(
 const getLabels = (data) => map(v => prop(0,values(v)))(data)
 const getValues = (data) => map(v => prop(1,values(v)))(data)
 
+const getPersonLabel = number => number + ' Persones'
+
 const PersonsChart = ({data}) => {
   const sorteHelps = sortHelps(data);
   const {t} = useTranslation('dashboard');
 
   const vals = {
-    labels: ['1 persona','2 persones','3 persones','4 persones','5 persones','6 persones'],
+    labels: pipe(keys,map(getPersonLabel))(data),
     datasets: [
       {
         label: 'Ajudes',
@@ -34,27 +38,11 @@ const PersonsChart = ({data}) => {
         borderWidth: 1,
         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
         hoverBorderColor: 'rgba(255,99,132,1)',
-        data: [50, 100, 125, 75, 60, 30],
+        data: values(data),
         barThickness: 15
       }
     ]
   };
-
-  /*const vals = {
-    labels: getLabels(sorteHelps),
-    datasets: [
-      {
-        label: 'Ajudes',
-        backgroundColor: '#eca1a6',
-        borderColor: 'rgba(255,99,132,1)',
-        borderWidth: 1,
-        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-        hoverBorderColor: 'rgba(255,99,132,1)',
-        data: getValues(sorteHelps),
-        barThickness: 15
-      }
-    ]
-  };*/
 
   const options= {
     legend:false,
