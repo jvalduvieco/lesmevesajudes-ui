@@ -28,6 +28,8 @@ const AidsTable = (props: Props) => {
   };
 
   const getMonthInici = aid => parseInt(aid.data_inici.substring(5,7))
+  const getAidTimeStamp = aid => parseInt(aid.data_inici.substring(0,4)) + parseInt(aid.data_inici.substring(5,7))
+  const getFilterTimeStamp = date => date.getFullYear() + date.getMonth() + 1
 
   return (
     <Paper elevation={2}>
@@ -48,7 +50,7 @@ const AidsTable = (props: Props) => {
             {props.aids &&
               props.aids.filter(aid => aid.active === (props.filter ? props.filter.active: true))
                         .filter(aid => props.filter && props.filter.admin ? aid.ambit === props.filter.admin : true)
-                        .filter(aid => props.filter && !aid.data_fi && aid.data_inici && (props.date.getMonth() + 1 >= getMonthInici(aid)))
+                        .filter(aid => props.filter && !aid.data_fi && aid.data_inici && getFilterTimeStamp(props.date) >= getAidTimeStamp(aid))
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((aid) => (
               <TableRow key={aid.code}>
