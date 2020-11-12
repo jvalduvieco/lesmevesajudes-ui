@@ -50,9 +50,10 @@ const getYear = result => parseInt(result.data.substring(0, 4))
 const isCurrentYearResult = result => hasDate(result) && (getYear(result) === currentYear)
 
 
-const collectHelpData = (results: List, filteredBy: FilterType) => {
+const collectAidData = (results: List, filteredBy: FilterType) => {
   const ajudesPersones = compose(
                             countBy(forEach(v => v)),
+                            filter(v => not(isNil(v))),
                             flatten,
                             map(prop('ajudes')),
                             flatten,
@@ -163,14 +164,19 @@ export const retrieveResults = () => async dispatch =>   {
           payload: TIMED_OUT_DASHBOARD,
         });
       }
+      
+      var positiveNegativeData = collectPositiveNegativeData(response.data.dashboards)
+      var totalSimulationsByMonthData = collectSimulationsByMonth(response.data.dashboards)
+      var recalculatedSimulationsByMonthData = collectRecalculatedSimulationsByMonth(response.data.dashboards)
+      var simulationsByPersonsData = collectByPersons(response.data.dashboards)
 
       return dispatch ({
         type: SHOW_DASHBOARD_SIMULATIONS,
         results: response.data.dashboards,
-        positiveNegativeData: collectPositiveNegativeData(response.data.dashboards),
-        totalSimulationsByMonthData: collectSimulationsByMonth(response.data.dashboards),
-        recalculatedSimulationsByMonthData: collectRecalculatedSimulationsByMonth(response.data.dashboards),
-        simulationsByPersonsData: collectByPersons(response.data.dashboards)
+        positiveNegativeData: positiveNegativeData,
+        totalSimulationsByMonthData: totalSimulationsByMonthData,
+        recalculatedSimulationsByMonthData: recalculatedSimulationsByMonthData,
+        simulationsByPersonsData: simulationsByPersonsData
       });
 
     }).catch(error => {
@@ -196,7 +202,7 @@ export const retrieveDashboardProfilesData = () => async dispatch =>   {
       var collectedSchoolData = collectSchoolData(response.data.dashboards);
       var collectedViolenceData = collectViolenceData(response.data.dashboards);
       var collectedDisabledData = collectDisabledData(response.data.dashboards);
-      //var collectedHelpData = collectHelpData(response.data.dashboards);
+      var collectedAidData = collectAidData(response.data.dashboards);
       var collectedLaboralData = collectLaboralData(response.data.dashboards);
       var collectedAgeData = collectAgeData(response.data.dashboards);
       var collectedHousingData = collectHousingData(response.data.dashboards);
@@ -208,7 +214,7 @@ export const retrieveDashboardProfilesData = () => async dispatch =>   {
         schoolData: collectedSchoolData,
         violenceData: collectedViolenceData,
         disabledData: collectedViolenceData,
-        //helpData: collectedDisabledData,
+        aidData: collectedAidData,
         laboralData: collectedLaboralData,
         ageData: collectedAgeData,
         housingData: collectedHousingData,

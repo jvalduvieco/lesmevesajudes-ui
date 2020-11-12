@@ -13,7 +13,7 @@ import {useTranslation} from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 
 type Props = {
-  aids: List<AidType>,
+  aids: List<String>,
   laboral: List<String>,
   selectedAids: [],
   closePanel:Function,
@@ -50,18 +50,20 @@ const FilterPanel = (props: Props) => {
   const {t} = useTranslation('dashboard');
 
   return (
+    <Paper elevation={2}>
       <FormControl className={classes.formControl}>
-      {props.aids &&
+      <FormLabel>Encara no hi ha filtres</FormLabel>
 
-          <FormGroup className={classes.filterBlock}>
-          <FormLabel>Ajudes</FormLabel>
-              {props.aids.map((aid,index) => {
-                return <FormControlLabel classes={{ label: classes.label }}  control={<Checkbox className={classes.aidCheckBox} value={aid.codi} color='primary' size='small'/>} label={aid.codi} /*label={<Typography variant="caption" color="textSecondary">{aid.codi}</Typography>}*/ value={aid.codi}/>
-                })
-              }
-          </FormGroup>
+      {//props.aids &&
+        //  <FormGroup className={classes.filterBlock}>
+        //  <FormLabel>Ajudes</FormLabel>
+        //     {props.aids.map((aid,index) => {
+        //        return <FormControlLabel classes={{ label: classes.label }}  control={<Checkbox className={classes.aidCheckBox} value={aid.codi} color='primary' size='small'/>} label={aid} /* value must be processed value={aid.codi}*//>
+        //        })
+        //      }
+        //  </FormGroup>
         }
-
+      {/*
         <FormLabel>Sexe</FormLabel>
         <RadioGroup className={classes.filterBlock} row>
           <FormControlLabel classes={{ label: classes.label }} control={<Radio value='Dona' color='primary' size='small'/>} label='Dona' />
@@ -93,7 +95,9 @@ const FilterPanel = (props: Props) => {
         <Grid>
           <Button onClick={() => props.closePanel()}>Netejar</Button>
         </Grid>
+        */}
       </FormControl>
+    </Paper>
     );
 }
 

@@ -80,6 +80,7 @@ const FilterPanel = (props: Props) => {
   })
 
   return (
+    <Paper elevation={2}>
       <FormControl className={classes.formControl}>
         <FormLabel>Activa</FormLabel>
         <Switch
@@ -120,6 +121,7 @@ const FilterPanel = (props: Props) => {
         </RadioGroup>
 
       </FormControl>
+    </Paper>
     );
 }
 

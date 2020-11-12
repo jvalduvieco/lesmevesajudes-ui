@@ -57,6 +57,7 @@ export default function(
       helpData: action.helpData,
       laboralData: action.laboralData,
       ageData: action.ageData,
+      aidData: action.aidData,
       housingData: action.housingData,
       positiveNegativeData: action.positiveNegativeData,
   }

@@ -22,7 +22,6 @@ type Props = {
 export const DashboardPage = (props :Props) => {
 
   const [open, setOpen] = useState(false);
-  //const [componentPanel, setComponent] = useState(<AidsDashboard />);
   const [componentPanel, setComponent] = useState(<AidsDashboard />);
   const anchorRef = useRef(null);
 

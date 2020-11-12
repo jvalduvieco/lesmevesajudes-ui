@@ -44,12 +44,15 @@ const FilterPanel = (props: Props) => {
   const classes = useStyles();
   const {t} = useTranslation('dashboard');
 
-  const [selectedDate, handleDateChange] = useState(new Date());
+  var currentYear = new Date().getFullYear();
+
+  const [fromDate, handleFromDateChange] = useState(new Date(currentYear + "-01-01"));
+  const [untilDate, handleUntilDateChange] = useState(new Date());
 
   return (
-
+    <Paper elevation={2}>
       <FormControl className={classes.formControl}>
-        <FormLabel>Mes</FormLabel>
+        <FormLabel>Des de</FormLabel>
         <Fragment>
           <DatePicker
             id='month'
@@ -57,11 +60,25 @@ const FilterPanel = (props: Props) => {
             views={["year", "month"]}
             minDate={new Date("2020-01-01")}
             maxDate={new Date()}
-            value={selectedDate}
-            onChange={handleDateChange}
+            value={fromDate}
+            onChange={handleFromDateChange}
+          />
+        </Fragment>
+
+        <FormLabel>Fins a</FormLabel>
+        <Fragment>
+          <DatePicker
+            id='month'
+            className={classes.filterBlock}
+            views={["year", "month"]}
+            minDate={new Date("2020-01-01")}
+            maxDate={new Date()}
+            value={untilDate}
+            onChange={handleUntilDateChange}
           />
         </Fragment>
       </FormControl>
+    </Paper>
     );
 }
 

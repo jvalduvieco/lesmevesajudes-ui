@@ -6,12 +6,12 @@ import FilterPanel from './FilterPanel';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import PositiveNegativeChart from './charts/PositiveNegativeComponent';
 import ChronologicDataChart from './charts/ChronologicDataComponent';
-import PersonsChart from './charts/PersonsChartComponent';
-import AidChart from '../charts/AidChartComponent';
-import {isEmpty} from 'ramda';
+import DonutChart from '../../components/Charts/DonutChartComponent';
+import HorizontalBarChart from '../../components/Charts/HorizontalBarChartComponent';
+import {isEmpty, keys, map, pipe, values} from 'ramda';
 import {retrieveResults, countEdited} from '../DashboardAction';
+import {useTranslation} from 'react-i18next';
 
 type Props = {
   allResults: [],
@@ -20,22 +20,25 @@ type Props = {
   recalculatedSimulationsByMonthData: Object,
   retrieveResults: Function,
   simulationsByPersonsData: Object
-  //countEdited: Function,
-  //editedCount: 0,
 };
+
 
 var helpData = {};
 var positiveNegativeData = {};
 
 const SimulationsDashboard = (props :Props) => {
 
-  if (isEmpty(props.allResults)) {
+  const {t} = useTranslation('dashboard');
+
+  if (isEmpty(values(props.positiveNegativeData))) {
     props.retrieveResults();
     props.countEdited();
   }  else {
     helpData = props.helpData;
     positiveNegativeData = props.positiveNegativeData;
   }
+
+  var getPersonLabel = number => number + ' Persones'
 
   return (
     <Grid container direction='row'>
@@ -61,16 +64,14 @@ const SimulationsDashboard = (props :Props) => {
             <Card>
               <CardContent>
                 <Typography align='center' variant="h5">Número de persones</Typography>
-                <PersonsChart data={props.simulationsByPersonsData} />
-                <Typography align='center'>{'Valor corresponents al any en curs'}</Typography>
+                  <HorizontalBarChart data={props.simulationsByPersonsData} title={'Per nº de persones'} labels={pipe(keys,map(getPersonLabel))(props.simulationsByPersonsData)} />
               </CardContent>
             </Card>
           </Grid>
           <Grid item xs={6}>
             <Card>
               <CardContent>
-                <PositiveNegativeChart height={50} data={positiveNegativeData} />
-                <Typography align='center'>{'Valor corresponents al any en curs'}</Typography>
+                <DonutChart height={50} data={positiveNegativeData} title={t('simulation_resultats')}/>
               </CardContent>
             </Card>
           </Grid>
