@@ -8,6 +8,7 @@ import {FilterType} from './AidsDashboardTypes';
 type Props = {
   aids: List ,
   filter: FilterType,
+  date: Date,
 }
 
 const AidsTable = (props: Props) => {
@@ -25,6 +26,8 @@ const AidsTable = (props: Props) => {
    setRowsPerPage(parseInt(event.target.value, 30));
    setPage(0);
   };
+
+  const getMonthInici = aid => parseInt(aid.data_inici.substring(5,7))
 
   return (
     <Paper elevation={2}>
@@ -45,13 +48,14 @@ const AidsTable = (props: Props) => {
             {props.aids &&
               props.aids.filter(aid => aid.active === (props.filter ? props.filter.active: true))
                         .filter(aid => props.filter && props.filter.admin ? aid.ambit === props.filter.admin : true)
+                        .filter(aid => props.filter && !aid.data_fi && aid.data_inici && (props.date.getMonth() + 1 >= getMonthInici(aid)))
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((aid) => (
               <TableRow key={aid.code}>
                 <TableCell component="th" scope="row">{aid.codi}</TableCell>
                 <TableCell component="th" scope="row">{aid.descripcio}</TableCell>
-                <TableCell component="th" scope="row">{aid.data_inici}</TableCell>
-                <TableCell component="th" scope="row">{aid.data_fi}</TableCell>
+                <TableCell component="th" scope="row">{aid.data_inici ? aid.data_inici : '-'}</TableCell>
+                <TableCell component="th" scope="row">{aid.data_fi ? aid.data_fi : '-'}</TableCell>
                 <TableCell component="th" scope="row">{aid.tipus}</TableCell>
                 <TableCell component="th" scope="row">{aid.ambit}</TableCell>
                 <TableCell component="th" scope="row">

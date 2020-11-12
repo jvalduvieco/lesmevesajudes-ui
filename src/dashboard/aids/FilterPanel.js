@@ -12,10 +12,11 @@ import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
 import {FilterType} from './AidsDashboardTypes';
 import {isNil} from 'ramda';
+import {AIDS_DASHBOARD_FILTER} from './AidsDashboardReducer';
 
 type Props = {
   aids: List<AidType>,
-  filter: FilterType,
+  //filter: FilterType,
   dispatch: any,
 }
 
@@ -55,16 +56,14 @@ const FilterPanel = (props: Props) => {
     case 'active' :
       setFilter({
         ...filter,
-        active: event.target.checked,
-        date: selectedDate
+        active: event.target.checked
       });
       break;
     case 'admin' :
       let adminValue = event.target.value;
       setFilter({
         ...filter,
-        admin: adminValue === ''? null: adminValue,
-        date: selectedDate
+        admin: adminValue === ''? null: adminValue
       });
       break;
     default:
@@ -74,8 +73,9 @@ const FilterPanel = (props: Props) => {
 
   useEffect(() => {
     props.dispatch({
-      type: 'AIDS_DASHBOARD_FILTER',
+      type: AIDS_DASHBOARD_FILTER,
       filter,
+      selectedDate,
     })
   })
 

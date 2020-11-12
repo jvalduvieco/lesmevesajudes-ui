@@ -9,10 +9,11 @@ export default function(
   action
 ) {
   switch (action.type) {
-    case 'AIDS_DASHBOARD_FILTER':
+    case AIDS_DASHBOARD_FILTER:
       return {
         ...state,
         filter : action.filter,
+        date: action.selectedDate
     }
   default:
     return state;

@@ -11,6 +11,7 @@ import {FilterType} from './AidsDashboardTypes';
 type Props = {
   aids: [],
   filter: FilterType,
+  date: Date,
   retrieveAids: any
 };
 
@@ -27,7 +28,7 @@ const AidsDashboard = (props :Props) => {
       </Grid>
       <Grid xs={9} container direction="column" item spacing={5} root>
         <Grid xs item center>
-          <AidsTable aids={props.aids} filter={props.filter}/>
+          <AidsTable aids={props.aids} filter={props.filter} date={props.date}/>
         </Grid>
       </Grid>
     </Grid>
@@ -37,7 +38,8 @@ const AidsDashboard = (props :Props) => {
 const mapStateToProps = (state) => {
   return {
     aids: state.dashboard.aids,
-    filter: state.aidsDashboard.filter
+    filter: state.aidsDashboard.filter,
+    date: state.aidsDashboard.date
   }
 }
 

@@ -5,14 +5,6 @@ export const SHOW_DASHBOARD_AIDS = 'SHOW_DASHBOARD_AIDS_TABLE';
 export const SHOW_DASHBOARD_EDITED_COUNT = 'SHOW_DASHBOARD_EDITED_COUNT';
 export const SHOW_DASHBOARD_SIMULATIONS = 'SHOW_DASHBOARD_SIMULATIONS';
 
-export const showFiltersAction = {
-    type: 'SHOW_DASHBOARD_FILTERS'
-}
-
-export const hideFiltersAction = {
-    type: 'HIDE_DASHBOARD_FILTERS'
-}
-
 export default function(
   state = {
           results:[],
