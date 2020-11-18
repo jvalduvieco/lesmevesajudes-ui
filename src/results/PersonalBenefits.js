@@ -38,8 +38,8 @@ const possibleBenefits = [
     to: newDate(2018, 9, 14)
   },
   {
-    ID: 'GE_051_00_mensual',
-    name: <Trans i18nKey='GE_051_00_mensual_title'>Renda activa d'inserció aturats de llarga durada</Trans>,
+    ID: 'GE_051_04_mensual',
+    name: <Trans i18nKey='GE_051_04_mensual_title'>Renda activa d'inserció aturats de llarga durada</Trans>,
     periode: <Trans i18nKey='mes'>mes</Trans>,
     url: 'link_GE_051',
     from: undefined,

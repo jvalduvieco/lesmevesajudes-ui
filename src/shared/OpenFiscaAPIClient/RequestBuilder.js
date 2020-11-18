@@ -140,12 +140,12 @@ const residenceDataToAPI = (residenceData: ResidenceData) => ({
   relacio_de_parentiu_amb_el_propietari: currentMonth(residenceData.relacio_de_parentiu_amb_el_propietari),
   tinc_alguna_propietat_a_part_habitatge_habitual_i_disposo_dusdefruit: currentMonth(residenceData.tinc_alguna_propietat_a_part_habitatge_habitual_i_disposo_dusdefruit),
   zona_de_lhabitatge: currentMonth(residenceData.zona_de_lhabitatge),
-  HA_001: currentMonth(null),
-  HA_002: currentMonth(null),
-  HA_003: currentMonth(null),
-  HA_004: currentMonth(null),
-  HA_004_01: currentMonth(null),
-  HA_005: currentMonth(null),
+  HA_077_01: currentMonth(null),
+  HG_077_02: currentMonth(null),
+  HG_077_03: currentMonth(null),
+  HG_077_04: currentMonth(null),
+  HG_077_04_01: currentMonth(null),
+  HE_077_00: currentMonth(null),
 });
 
 const createUnitatDeConvivencia = (persons, residenceData) => {
@@ -202,7 +202,7 @@ const personToOpenFiscaPerson = (person: Person) => ({
   AE_230_mensual: currentMonth(null),
   AE_230_01_mensual: currentMonth(null),
   EG_233_mensual: currentMonth(null),
-  GE_051_00_mensual: currentMonth(null),
+  GE_051_04_mensual: currentMonth(null),
   GE_051_01_mensual: currentMonth(null),
   GE_051_02_mensual: currentMonth(null),
   GE_051_03_mensual: currentMonth(null),

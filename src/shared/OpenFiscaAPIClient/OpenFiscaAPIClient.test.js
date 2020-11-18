@@ -131,7 +131,7 @@ describe('OpenFiscaAPIClient', () => {
                             "2017-01": 0,
                           }
                       ,
-                      "GE_051_00_mensual":
+                      "GE_051_04_mensual":
                           {
                             "2017-01":
                                 0
@@ -345,7 +345,7 @@ describe('OpenFiscaAPIClient', () => {
                             "2017-01": 0,
                           }
                       ,
-                      "GE_051_00_mensual":
+                      "GE_051_04_mensual":
                           {
                             "2017-01":
                                 0
@@ -547,7 +547,7 @@ describe('OpenFiscaAPIClient', () => {
                             "2017-01": 0,
                           }
                       ,
-                      "GE_051_00_mensual":
+                      "GE_051_04_mensual":
                           {
                             "2017-01":
                                 0
@@ -749,7 +749,7 @@ describe('OpenFiscaAPIClient', () => {
                             "2017-01": 0,
                           }
                       ,
-                      "GE_051_00_mensual":
+                      "GE_051_04_mensual":
                           {
                             "2017-01":
                                 0
@@ -920,35 +920,35 @@ describe('OpenFiscaAPIClient', () => {
               {
                 "ef49c48b-d2f0-4fc2-8a79-d84b3df10c3e":
                     {
-                      "HA_001":
+                      "HA_077_01":
                           {
                             "2017-01":
                                 0
                           }
                       ,
-                      "HA_002":
+                      "HG_077_02":
                           {
                             "2017-01":
                                 0
                           }
                       ,
-                      "HA_003":
+                      "HG_077_03":
                           {
                             "2017-01":
                                 0
                           }
                       ,
-                      "HA_004":
+                      "HG_077_04":
                           {
                             "2017-01":
                                 0
                           }
                       ,
-                      "HA_004_01":
+                      "HG_077_04_01":
                           {
                             "2017-01": 0,
                           },
-                      "HA_005":
+                      "HE_077_00":
                           {
                             "2017-01":
                                 200

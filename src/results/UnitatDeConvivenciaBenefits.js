@@ -14,61 +14,61 @@ type UnitatDeConvivenciaBenefitsProps = {
 
 const possibleBenefits = [
   {
-    ID: 'HA_001',
-    name: <Trans i18nKey='HA_001_title'>Prestacions econòmiques d'urgència social derivades de la mediació a
+    ID: 'HA_077_01',
+    name: <Trans i18nKey='HA_077_01_title'>Prestacions econòmiques d'urgència social derivades de la mediació a
       Barcelona</Trans>,
-    url: 'link_HA_001',
-    amountText: <Trans i18nKey='HA_001_import'>Fins a 300 € /mes</Trans>,
+    url: 'link_HA_077_01',
+    amountText: <Trans i18nKey='HA_077_01_import'>Fins a 300 € /mes</Trans>,
     conditions: <Trans i18nKey='maxim_12_mesos'>Màxim 12 mesos</Trans>,
     from: newDate(2019, 2, 20),
     to: newDate(2019, 12, 5)
   },
   {
-    ID: 'HA_002',
-    name: <Trans i18nKey='HA_002_title'>Prestacions econòmiques d’especial urgència davant la pèrdua de l’habitatge
+    ID: 'HG_077_02',
+    name: <Trans i18nKey='HG_077_02_title'>Prestacions econòmiques d’especial urgència davant la pèrdua de l’habitatge
       per desnonament o execució hipotecària</Trans>,
-    amountText: <Trans i18nKey='HA_002_import'>Fins a 200 € /mes</Trans>,
+    amountText: <Trans i18nKey='HG_077_02_import'>Fins a 200 € /mes</Trans>,
     conditions: <Trans i18nKey='maxim_12_mesos'>Màxim 12 mesos</Trans>,
-    url: 'link_HA_002',
+    url: 'link_HG_077_02',
     from: undefined,
     to: undefined
   },
   {
-    ID: 'HA_003',
-    name: <Trans i18nKey='HA_003_title'>Prestacions econòmiques d’especial urgència per al pagament de quotes
+    ID: 'HG_077_03',
+    name: <Trans i18nKey='HG_077_03_title'>Prestacions econòmiques d’especial urgència per al pagament de quotes
       d'amortització hipotecària</Trans>,
-    amountText: <Trans i18nKey='HA_003_import'>Fins a 3000 € /any</Trans>,
+    amountText: <Trans i18nKey='HG_077_03_import'>Fins a 3000 € /any</Trans>,
     conditions: <Trans i18nKey='pagament_unic'>pagament únic</Trans>,
-    url: 'link_HA_003',
+    url: 'link_HG_077_03',
     from: undefined,
     to: undefined
   },
   {
-    ID: 'HA_004',
-    name: <Trans i18nKey='HA_004_title'>Prestacions econòmiques d’especial urgència per al pagament de deutes del
+    ID: 'HG_077_04',
+    name: <Trans i18nKey='HG_077_04_title'>Prestacions econòmiques d’especial urgència per al pagament de deutes del
       lloguer</Trans>,
-    amountText: <Trans i18nKey='HA_004_import'>Fins a 3000 € /any</Trans>,
+    amountText: <Trans i18nKey='HG_077_04_import'>Fins a 3000 € /any</Trans>,
     conditions: <Trans i18nKey='pagament_unic'>pagament únic</Trans>,
-    url: 'link_HA_004',
+    url: 'link_HG_077_04',
     from: undefined,
     to: undefined
   },
   {
-    ID: 'HA_004_01',
-    name: <Trans i18nKey='HA_004_01_title'>Ajut complementari a les prestacions econòmiques d’especial urgència per
+    ID: 'HG_077_04_01',
+    name: <Trans i18nKey='HG_077_04_01_title'>Ajut complementari a les prestacions econòmiques d’especial urgència per
       al pagament de deutes del lloguer</Trans>,
-    amountText: <Trans i18nKey='HA_004_01_import'>Fins a 200 € /mes</Trans>,
+    amountText: <Trans i18nKey='HG_077_04_01_import'>Fins a 200 € /mes</Trans>,
     conditions: <Trans i18nKey='maxim_12_mesos'>Màxim 12 mesos</Trans>,
-    url: 'link_HA_004',
+    url: 'link_HG_077_04',
     from: undefined,
     to: undefined
   },
   {
-    ID: 'HA_005',
-    name: <Trans i18nKey='HA_005_title'>Subvencions de pagament de lloguer</Trans>,
-    amountText: <Trans i18nKey='HA_005_import'>Fins a 200 € /mes</Trans>,
+    ID: 'HE_077_00',
+    name: <Trans i18nKey='HE_077_00_title'>Subvencions de pagament de lloguer</Trans>,
+    amountText: <Trans i18nKey='HE_077_00_import'>Fins a 200 € /mes</Trans>,
     conditions: <Trans i18nKey='maxim_12_mesos'>Màxim 12 mesos</Trans>,
-    url: 'link_HA_005',
+    url: 'link_HE_077_00',
     from: newDate(2018, 5, 19),
     to: newDate(2018, 6, 29)
   },
