@@ -29,13 +29,18 @@ const ResumePage = (props) => {
 
 		const serializedPersons = serialize(persons);
 
+			var custodies;
+			var families;
+			var sustentadorsSolitarisAmbPossiblesParelles;
 			// family consts
-			const custodies = family.custodies;
-			const families = toArray(families016(custodies, persons.toArray(), family));
-			const familiesMonoparentals = families.filter((familia) => familia.monoparental);
-			const sustentadorsUnicsIDs = familiesMonoparentals.map((familia) => familia.sustentadors_i_custodia[0]);
-			const sustentadorsSolitaris = persons.filter((person: Person) => sustentadorsUnicsIDs.includes(person.id));
-			const sustentadorsSolitarisAmbPossiblesParelles = sustentadorsSolitarisIPossiblesParelles(sustentadorsSolitaris, persons.toArray());
+			if (family) {
+				custodies = family ? family.custodies : null;
+				families = toArray(families016(custodies, persons.toArray(), family));
+				const familiesMonoparentals = families.filter((familia) => familia.monoparental);
+				const sustentadorsUnicsIDs = familiesMonoparentals.map((familia) => familia.sustentadors_i_custodia[0]);
+				const sustentadorsSolitaris = persons.filter((person: Person) => sustentadorsUnicsIDs.includes(person.id));
+				sustentadorsSolitarisAmbPossiblesParelles = sustentadorsSolitarisIPossiblesParelles(sustentadorsSolitaris, persons.toArray());
+			}
 
 			// residence consts
 			const esCessio = residence.relacio_habitatge === 'cessio';

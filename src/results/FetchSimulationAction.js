@@ -73,7 +73,7 @@ export const saveSimulation = (id: string, simulationData: SimulationData, resul
 }
 
 export const retrieveSimulation = (simulationId: string) =>  (dispatch: any) => {
-	return simulationStore.getSimulation(simulationId).then(result => {
+	return simulationStore.getSimulation(simulationId.trim()).then(result => {
 		if (result.status === 210) {
 			return dispatch({
 				type: RETRIEVE_SIMULATION_ERROR,

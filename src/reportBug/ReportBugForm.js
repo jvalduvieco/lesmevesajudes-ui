@@ -163,7 +163,7 @@ const selector = formValueSelector('ReportBugForm');
 
 function mapStateToProps(state, ownProps) {
   return {
-    initialValues: {...ownProps.initialValues, application_state: JSON.stringify(state), simulation_id: UUID.create()},
+    initialValues: {...ownProps.initialValues, application_state: JSON.stringify(state), simulation_id: UUID.create()}, // simulation_id should be retrieved from state and not created here
     resultatIncorrecte: selector(state, 'accepted_result') === false,
     isError: state.reportBug.isError,
     isRequestDone: state.reportBug.isRequestDone,

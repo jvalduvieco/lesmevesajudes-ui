@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Grid} from '@material-ui/core';
 import {AppFormContainer} from '../components/AppForms';
-
 import type {Person, PersonID} from '../persons/PersonTypes';
 import {submitReport} from "../reportBug/ReportBugActions";
 import {retrieveSimulation, fetchSimulation} from './FetchSimulationAction';
@@ -11,8 +10,12 @@ import SimulationLoading from './SimulationLoading';
 import SimulationError from './SimulationError';
 import SimulationSuccess from './SimulationSuccess';
 import AdminForm from '../admin/AdminForm';
+import {SHOW_REPORT_BUG} from '../config';
+import ReportBugForm from '../reportBug/ReportBugForm';
+import {getReportBugDataFromLocalStorage} from '../reportBug/ReportBugPage';
 
 type Props = {
+  classes: Object,
   dispatch: Function,
   isError: boolean,
   isRequestDone: boolean,
@@ -54,7 +57,7 @@ class ResultsPage extends React.Component<Props> {
   }
 
   render() {
-    const {isError, isRequestDone, resultsData, persons, simulationID, initialSimulationId, isAdmin, simulationData} = this.props;
+    const {isError, isRequestDone, resultsData, persons, simulationID, initialSimulationId, classes, isAdmin, simulationData} = this.props;
     if (!this.enoughDataForSimulation() && !isAdmin) {
       return (<SimulationMissingData/>);
     }
@@ -77,14 +80,22 @@ class ResultsPage extends React.Component<Props> {
     if (isRequestDone && isError) {
       return (<SimulationError simulationID={simulationID}/>);
     }
-    return (<SimulationSuccess
-      resultsData={resultsData}
-      persons={persons}
-      simulationID={simulationID}
-      initialSimulationId={initialSimulationId}
-      printSimulation = {this.props.printSimulation}
-      simulationData = {simulationData}
-      />);
+    return (
+      <fragment>
+        <SimulationSuccess
+        resultsData={resultsData}
+        persons={persons}
+        simulationID={simulationID}
+        initialSimulationId={initialSimulationId}
+        printSimulation = {this.props.printSimulation}
+        simulationData = {simulationData}
+        />
+        {/*SHOW_REPORT_BUG &&*/}
+          <Grid item xs={12}>
+            <ReportBugForm initialValues={getReportBugDataFromLocalStorage()} onSubmit={this.submitReport}/>
+          </Grid>
+      </fragment>
+    );
   }
 }
 

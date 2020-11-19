@@ -1,6 +1,6 @@
 import React from 'react';
 import {Trans} from 'react-i18next';
-import {withStyles} from '@material-ui/core';
+import {Grid, withStyles} from '@material-ui/core';
 import {AppFormContainer} from '../components/AppForms';
 import {styles} from '../styles/theme';
 import ShowMeOnceModal from '../components/ShowMeOnceModal'
@@ -15,7 +15,7 @@ const SimulationSuccessComponent = ({resultsData, persons, classes, simulationID
     </ShowMeOnceModal>
   }
 
-  <ResumePage persons={persons} residence={simulationData.residence} family={simulationData.family}/>
+    <ResumePage persons={persons} residence={simulationData.residence} family={simulationData.family}/>
   </AppFormContainer>
 
 );
