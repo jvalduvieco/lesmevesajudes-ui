@@ -16,6 +16,8 @@
     "i18next-browser-languagedetector": "5.0.0",
     "i18next-http-backend": "1.0.21",
     "immutable": "^3.8.0",
+    "jspdf": "^2.1.1",
+    "jspdf-autotable": "^3.5.13",
     "moment": "2.27.0",
     "query-string": "^6.11.0",
     "ramda": "^0.27.0",
