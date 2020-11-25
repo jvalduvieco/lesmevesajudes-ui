@@ -57,7 +57,7 @@ class ResultsPage extends React.Component<Props> {
   }
 
   render() {
-    const {isError, isRequestDone, resultsData, persons, simulationID, initialSimulationId, classes, isAdmin, simulationData} = this.props;
+    const {isError, isRequestDone, resultsData, persons, simulationID, initialSimulationId, isAdmin, simulationData} = this.props;
     if (!this.enoughDataForSimulation() && !isAdmin) {
       return (<SimulationMissingData/>);
     }
@@ -90,10 +90,11 @@ class ResultsPage extends React.Component<Props> {
         printSimulation = {this.props.printSimulation}
         simulationData = {simulationData}
         />
-        {/*SHOW_REPORT_BUG &&*/}
+        {SHOW_REPORT_BUG &&
           <Grid item xs={12}>
             <ReportBugForm initialValues={getReportBugDataFromLocalStorage()} onSubmit={this.submitReport}/>
           </Grid>
+        }
       </fragment>
     );
   }

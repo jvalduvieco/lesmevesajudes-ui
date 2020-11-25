@@ -12,6 +12,7 @@ import ResultsReducer from './results/ResultsReducer';
 import AdminReducer from './admin/AdminReducer';
 import DashboardReducer from './dashboard/DashboardReducer';
 import AidsDashboardReducer from './dashboard/aids/AidsDashboardReducer';
+import SimulationsDashboardReducer from './dashboard/simulations/SimulationsDashboardReducer';
 
 const rootReducer = combineReducers({
   family: FamilyReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   admin: AdminReducer,
   dashboard: DashboardReducer,
   aidsDashboard: AidsDashboardReducer,
+  simulationsDashboard: SimulationsDashboardReducer,
 });
 
 export default rootReducer;

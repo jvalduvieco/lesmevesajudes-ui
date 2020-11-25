@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Grid} from '@material-ui/core';
@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import ChronologicDataChart from './charts/ChronologicDataComponent';
 import DonutChart from '../../components/Charts/DonutChartComponent';
 import HorizontalBarChart from '../../components/Charts/HorizontalBarChartComponent';
-import {isEmpty, keys, map, pipe, values} from 'ramda';
+import {keys, map, pipe} from 'ramda';
 import {retrieveResults, countEdited} from '../DashboardAction';
 import {useTranslation} from 'react-i18next';
 
@@ -19,24 +19,19 @@ type Props = {
   totalSimulationsByMonthData: Object,
   recalculatedSimulationsByMonthData: Object,
   retrieveResults: Function,
-  simulationsByPersonsData: Object
+  simulationsByPersonsData: Object,
+  fromDate: Date,
+  untilDate: Date,
 };
-
-
-var helpData = {};
-var positiveNegativeData = {};
 
 const SimulationsDashboard = (props :Props) => {
 
   const {t} = useTranslation('dashboard');
 
-  if (isEmpty(values(props.positiveNegativeData))) {
-    props.retrieveResults();
-    props.countEdited();
-  }  else {
-    helpData = props.helpData;
-    positiveNegativeData = props.positiveNegativeData;
-  }
+  useEffect(() => {
+    console.log(props.fromDate.getMonth)
+    props.retrieveResults(props.fromDate, props.untilDate);
+  },[props.fromDate, props.untilDate])
 
   var getPersonLabel = number => number + ' Persones'
 
@@ -71,7 +66,7 @@ const SimulationsDashboard = (props :Props) => {
           <Grid item xs={6}>
             <Card>
               <CardContent>
-                <DonutChart height={50} data={positiveNegativeData} title={t('simulation_resultats')}/>
+                <DonutChart height={50} data={props.positiveNegativeData} title={t('simulation_resultats')}/>
               </CardContent>
             </Card>
           </Grid>
@@ -88,6 +83,8 @@ const mapStateToProps = (state) => {
     recalculatedSimulationsByMonthData: state.dashboard.recalculatedSimulationsByMonthData,
     simulationsByPersonsData: state.dashboard.simulationsByPersonsData,
     positiveNegativeData: state.dashboard.positiveNegativeData,
+    fromDate: state.simulationsDashboard.fromDate,
+    untilDate: state.simulationsDashboard.untilDate
   }
 }
 

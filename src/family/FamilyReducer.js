@@ -17,7 +17,7 @@ export default function (
     case 'REMOVE_PERSON':
       return init();
     case 'SHOW_SIMULATION':
-    	return action.simulation.family ? action.simulation.family : null;
+    	return action.simulation.family ? action.simulation.family : { custodies: {}};
     default:
       return state;
   }

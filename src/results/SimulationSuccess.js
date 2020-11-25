@@ -1,6 +1,6 @@
 import React from 'react';
 import {Trans} from 'react-i18next';
-import {Grid, withStyles} from '@material-ui/core';
+import {withStyles} from '@material-ui/core';
 import {AppFormContainer} from '../components/AppForms';
 import {styles} from '../styles/theme';
 import ShowMeOnceModal from '../components/ShowMeOnceModal'

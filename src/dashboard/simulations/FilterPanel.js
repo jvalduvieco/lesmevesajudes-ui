@@ -1,17 +1,15 @@
-import React, { Fragment, useState } from 'react';
-import Button from '@material-ui/core/Button';
+import React, { Fragment, useState, useEffect } from 'react';
+import {connect} from 'react-redux';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
 import {DatePicker} from "@material-ui/pickers";
-import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
+import {SIMULATIONS_DASHBOARD_FILTER} from './SimulationsDashboardReducer';
 
 type Props = {
   allResults: [],
+  dispatch: any,
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -42,12 +40,22 @@ const useStyles = makeStyles((theme) => ({
 const FilterPanel = (props: Props) => {
 
   const classes = useStyles();
-  const {t} = useTranslation('dashboard');
+  //const {t} = useTranslation('dashboard');
 
-  var currentYear = new Date().getFullYear();
+
+  var currentDate = new Date()
+  var currentYear = currentDate.getFullYear();
 
   const [fromDate, handleFromDateChange] = useState(new Date(currentYear + "-01-01"));
-  const [untilDate, handleUntilDateChange] = useState(new Date());
+  const [untilDate, handleUntilDateChange] = useState(currentDate);
+
+  useEffect(() => {
+    props.dispatch({
+      type: SIMULATIONS_DASHBOARD_FILTER,
+      fromDate,
+      untilDate,
+    })
+  })
 
   return (
     <Paper elevation={2}>
@@ -58,8 +66,8 @@ const FilterPanel = (props: Props) => {
             id='month'
             className={classes.filterBlock}
             views={["year", "month"]}
-            minDate={new Date("2020-01-01")}
-            maxDate={new Date()}
+            minDate={new Date(currentYear + "-01-01")}
+            maxDate={currentDate}
             value={fromDate}
             onChange={handleFromDateChange}
           />
@@ -71,8 +79,8 @@ const FilterPanel = (props: Props) => {
             id='month'
             className={classes.filterBlock}
             views={["year", "month"]}
-            minDate={new Date("2020-01-01")}
-            maxDate={new Date()}
+            minDate={new Date(currentYear + "-01-01")}
+            maxDate={currentDate}
             value={untilDate}
             onChange={handleUntilDateChange}
           />
@@ -82,4 +90,4 @@ const FilterPanel = (props: Props) => {
     );
 }
 
-export default FilterPanel
+export default connect()(FilterPanel);

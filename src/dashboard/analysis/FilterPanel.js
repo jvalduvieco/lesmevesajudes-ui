@@ -1,15 +1,7 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
+import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import Checkbox from '@material-ui/core/Checkbox';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import {useTranslation} from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 
 type Props = {
@@ -47,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const FilterPanel = (props: Props) => {
 
   const classes = useStyles();
-  const {t} = useTranslation('dashboard');
+  //const {t} = useTranslation('dashboard');
 
   return (
     <Paper elevation={2}>

@@ -45,7 +45,7 @@ const isRecalculated = result => not(isOriginal(result))
 const hasDate = result => !isNil(result.data)
 const currentYear = new Date().getFullYear()
 const getMonth = result => months[getMonthNumber(result)]
-const getMonthNumber = result => parseInt(result.data.substring(5, 7))
+const getMonthNumber = result => parseInt(result.data.substring(5, 7)) - 1
 const getYear = result => parseInt(result.data.substring(0, 4))
 const isCurrentYearResult = result => hasDate(result) && (getYear(result) === currentYear)
 
@@ -114,7 +114,7 @@ const collectHousingData = (results: List, resultFilter: FilterType) => compose(
                                                                             filter(has('habitatge')))(results)
 const collectPositiveNegativeData = (results: List, resultFilter: FilterType) => compose(
                                                                                      countBy(prop('estatus')),
-                                                                                     filter(isCurrentYearResult)
+                                                                                     //filter(isCurrentYearResult)
                                                                                   )(results)
 const collectByPersons = (result: List) => compose(
                                             countBy(countPersons),
@@ -156,15 +156,15 @@ export const retrieveAids = () => dispatch => {
       });
 }
 
-export const retrieveResults = () => async dispatch =>   {
-  axios.get(DASHBOARD_URL, {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
+export const retrieveResults = (fromDate: Date, untilDate: Date) => async dispatch =>   {
+  axios.get(DASHBOARD_URL + '/?from_date=' + fromDate.toISOString() + '&until_date=' + untilDate.toISOString(), {headers: {'Authentication-Token': SIMULATION_STORE_AUTH_TOKEN}}).then(response => {
       if (response.status === 210) {
         return dispatch({
           type: RETRIEVE_DASHBOARD_ERROR,
           payload: TIMED_OUT_DASHBOARD,
         });
       }
-      
+
       var positiveNegativeData = collectPositiveNegativeData(response.data.dashboards)
       var totalSimulationsByMonthData = collectSimulationsByMonth(response.data.dashboards)
       var recalculatedSimulationsByMonthData = collectRecalculatedSimulationsByMonth(response.data.dashboards)
@@ -213,7 +213,7 @@ export const retrieveDashboardProfilesData = () => async dispatch =>   {
         sexData: collectedSexData,
         schoolData: collectedSchoolData,
         violenceData: collectedViolenceData,
-        disabledData: collectedViolenceData,
+        disabledData: collectedDisabledData,
         aidData: collectedAidData,
         laboralData: collectedLaboralData,
         ageData: collectedAgeData,

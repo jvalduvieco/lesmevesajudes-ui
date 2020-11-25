@@ -27,7 +27,6 @@ const AidsTable = (props: Props) => {
    setPage(0);
   };
 
-  const getMonthInici = aid => parseInt(aid.data_inici.substring(5,7))
   const getAidTimeStamp = aid => parseInt(aid.data_inici.substring(0,4)) + parseInt(aid.data_inici.substring(5,7))
   const getFilterTimeStamp = date => date.getFullYear() + date.getMonth() + 1
 

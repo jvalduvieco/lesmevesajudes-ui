@@ -8,9 +8,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 import { DatePicker } from "@material-ui/pickers";
-import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
-import {FilterType} from './AidsDashboardTypes';
 import {isNil} from 'ramda';
 import {AIDS_DASHBOARD_FILTER} from './AidsDashboardReducer';
 
@@ -49,7 +47,7 @@ const FilterPanel = (props: Props) => {
   const [filter, setFilter] = useState(initialFilterState);
   const [selectedDate, handleDateChange] = useState(new Date());
   const classes = useStyles();
-  const {t} = useTranslation('dashboard');
+  //const {t} = useTranslation('dashboard');
 
   const handleFilter = (event) => {
     switch(event.target.id) {

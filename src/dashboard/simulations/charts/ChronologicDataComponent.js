@@ -1,24 +1,24 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
 import {Grid,Typography} from '@material-ui/core';
-import {keys, map, values} from 'ramda';
+import {map, prop, propIs} from 'ramda';
 import {useTranslation} from 'react-i18next';
 
 const ChronologicDataChart = ({totalSimuationsByMonth, recalculatedSimulationsByMonth}) => {
 
   const {t} = useTranslation('dashboard');
 
-  const rand = () => Math.round(Math.random()*100)
+  const months = ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']
+  const getValues = (data) =>  map(m => propIs(m) ? prop(m, data) : 0)(months)
 
   const vals = {
-    //labels: ['Gener', 'Febrer', 'Març', 'April', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Decembre'],
-    labels: keys(totalSimuationsByMonth),
+    labels: months,
     datasets: [
       {
         type: 'bar',
         label: 'Totals',
         backgroundColor: '#bdcebe',
-        data: values(totalSimuationsByMonth),
+        data: getValues(totalSimuationsByMonth),
         borderColor: 'white',
         borderWidth: 2,
       },
@@ -26,39 +26,10 @@ const ChronologicDataChart = ({totalSimuationsByMonth, recalculatedSimulationsBy
         type: 'bar',
         label: 'Recalculades',
         backgroundColor: '#eca1a6',
-        data: values(recalculatedSimulationsByMonth),
+        data : getValues(recalculatedSimulationsByMonth),
       },
     ],
   }
-
-
-  /*const vals = {
-  labels: ['Gener', 'Febrer', 'Març', 'April', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Decembre'],
-  datasets: [
-    {
-      type: 'line',
-      label: 'Total',
-      borderColor: 'rgb(54, 162, 235)',
-      borderWidth: 2,
-      fill: false,
-      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-    },
-    {
-      type: 'bar',
-      label: 'Recuperades',
-      backgroundColor: '#bdcebe',
-      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-      borderColor: 'white',
-      borderWidth: 2,
-    },
-    {
-      type: 'bar',
-      label: 'Recalculades',
-      backgroundColor: '#eca1a6',
-      data: [rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand(), rand()],
-    },
-  ],
-}*/
 
   return <Grid align='center' item>
           <Typography headlineMapping='h3' color='textPrimary'>{t('simulation_resultats')}</Typography>
